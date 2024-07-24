@@ -8,6 +8,10 @@
 #include <string>
 #include <sstream>
 
+#include "Renderer.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+
 #define WIDTH 800.0f
 #define HIGTH 600.0f
 
@@ -215,21 +219,18 @@ int main() {
     };
 
     // 配置顶点缓冲对象和顶点数组对象
-    GLuint VAO,VBO,IBO;
+    GLuint VAO;
 
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    VertexBuffer vb(vertices, sizeof(vertices));
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
 
-    glGenBuffers(1, &IBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    IndexBuffer ib(indices, 36);
 
 
     GLfloat lineVertices[] = {
@@ -322,7 +323,7 @@ int main() {
         
         // 绘制立方体
         glBindVertexArray(VAO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+        ib.Bind();
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);// 36个索引的数量
 
 
@@ -348,7 +349,6 @@ int main() {
     }
 
     // 清理资源
-    glDeleteBuffers(1, &VBO);
     glDeleteProgram(shaderProgram);
     glfwTerminate();
 
