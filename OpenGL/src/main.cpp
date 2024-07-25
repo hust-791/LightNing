@@ -11,6 +11,8 @@
 #include "Renderer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "VertexArray.h"
+#include "VertexBufferLayout.h"
 
 #define WIDTH 800.0f
 #define HIGTH 600.0f
@@ -219,16 +221,12 @@ int main() {
     };
 
     // 配置顶点缓冲对象和顶点数组对象
-    GLuint VAO;
-
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-
-
+    VertexArray va;
     VertexBuffer vb(vertices, sizeof(vertices));
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+    va.AddBuffer(vb, layout);
 
     IndexBuffer ib(indices, 36);
 
@@ -322,7 +320,7 @@ int main() {
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
         
         // 绘制立方体
-        glBindVertexArray(VAO);
+        va.Bind();
         ib.Bind();
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);// 36个索引的数量
 
