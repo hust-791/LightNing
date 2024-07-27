@@ -1,10 +1,4 @@
-#include <glad.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include "Renderer.h"
-#include "Shader.h"
+#include "stdafx.h"
 
 Shader::Shader(std::string path) :m_RendererID(0), m_Path(path)
 {

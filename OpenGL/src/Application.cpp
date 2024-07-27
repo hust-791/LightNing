@@ -1,19 +1,4 @@
-#include <glad.h>
-#include <glfw3.h>
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtc/type_ptr.hpp>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-
-#include "Renderer.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexBufferLayout.h"
-#include "VertexArray.h"
-#include "shader.h"
+#include "stdafx.h"
 
 #define WIDTH 800.0f
 #define HIGTH 600.0f
@@ -86,7 +71,8 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 }
 
 // 主函数
-int main() {
+int main() 
+{
     // 初始化GLFW
     if (!glfwInit()) 
     {
@@ -133,8 +119,7 @@ int main() {
              0.5f,  0.5f,  -0.5f,
             -0.5f,  0.5f,  -0.5f,
         };
-
-        unsigned int indices[] = {
+        unsigned int indicesCube[] = {
             0,1,2,
             2,3,0,
             1,5,6,
@@ -148,69 +133,48 @@ int main() {
             5,4,7,
             7,6,5
         };
-
-        // 配置顶点缓冲对象和顶点数组对象
-        VertexArray vaCube;
-        VertexBuffer vbCube(vertices, sizeof(vertices));
-
-        VertexBufferLayout layoutCube;
-        layoutCube.Push<float>(3);
-        vaCube.AddBuffer(vbCube, layoutCube);
-
-        IndexBuffer ib(indices, 36);
-
-
-        GLfloat lineVertices[] = {
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f, -0.5f,
-
-        -0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
-
-        -0.5f, -0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f
+        unsigned int indicesLine[] = {
+            0,1,
+            1,2,
+            2,3,
+            3,0,
+            0,4,
+            1,5,
+            2,6,
+            3,7,
+            4,5,
+            5,6,
+            6,7,
+            7,4
         };
 
-        VertexArray vaLine;
-        VertexBuffer vbLine(lineVertices, sizeof(lineVertices));
+        // 配置顶点缓冲对象和顶点数组对象
+        VertexArray va;
+        VertexBuffer vb(vertices, sizeof(vertices));
 
-        VertexBufferLayout layoutLine;
-        layoutLine.Push<float>(3);
-        vaLine.AddBuffer(vbLine, layoutLine);
+        VertexBufferLayout layout;
+        layout.Push<float>(3);
+        va.AddBuffer(vb, layout);
+
+        IndexBuffer ibCube(indicesCube, 36);
+        IndexBuffer ibLine(indicesLine, 24);
 
         float r = 0.0f;
         float increment = 0.05f;
 
+        Renderer renderer;
         // 主循环
         while (!glfwWindowShouldClose(window))
         {
             // 清屏
-            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            renderer.Clear();
 
             // 更新颜色
             if (r > 1.0f) increment = -0.03f;
             else if (r < 0.0f) increment = 0.03f;
             r += increment;
 
+            //cube
             shaderCube.Bind();
 
             shaderCube.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
@@ -222,11 +186,8 @@ int main() {
             // 设置投影矩阵
             glm::mat4 projection = glm::perspective(glm::radians(fov), WIDTH / HIGTH, 0.1f, 100.0f);
             shaderCube.SetUniformMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
-
-            // 绘制立方体
-            vaCube.Bind();
-            ib.Bind();
-            glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);// 36个索引的数量
+            // DrawCall
+            renderer.Draw(va, ibCube, GL_TRIANGLES, shaderCube);
 
 
             //Line
@@ -239,9 +200,8 @@ int main() {
             shaderLine.SetUniformMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
             // 设置投影矩阵
             shaderLine.SetUniformMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
-
-            vaLine.Bind();
-            glDrawArrays(GL_LINES, 0, 24);
+            // DrawCall
+            renderer.Draw(va, ibLine, GL_LINES, shaderLine);
 
             // 交换缓冲区
             glfwSwapBuffers(window);

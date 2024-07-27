@@ -1,8 +1,6 @@
-#include "glad.h"
-#include "IndexBuffer.h"
-#include "Renderer.h"
+#include "stdafx.h"
 
-IndexBuffer::IndexBuffer(const unsigned int* data, size_t count) :m_count(count),m_rendererID(0)
+IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count) :m_count(count),m_rendererID(0)
 {
     ASSERT(sizeof(unsigned int) == sizeof(GLuint));
 
