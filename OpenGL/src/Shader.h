@@ -21,8 +21,10 @@ public:
 	void Bind() const;
 	void UnBind() const;
 
+	void SetUniform1i(std::string name, int val);
+	void SetUniform1f(std::string name, float val);
 	void SetUniform4f(std::string name, float f1, float f2, float f3, float f4);
-	void SetUniformMatrix4fv(std::string name, GLsizei count, GLboolean transpose, const GLfloat* value);
+	void SetUniformMatrix4fv(std::string name, GLsizei count, GLboolean transpose, const glm::mat4& mat);
 
 private:
 	ShaderProgramSource __ParseShader(const std::string& path);

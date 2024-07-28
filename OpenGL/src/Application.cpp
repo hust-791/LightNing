@@ -104,20 +104,23 @@ int main()
         return -1;
     }
 
+    GLCall(glEnable(GL_BLEND));
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
     {
         // 创建着色器程序
         Shader shaderCube("res/shaders/Basic.shader");
         Shader shaderLine("res/shaders/Basic.shader");
 
         GLfloat vertices[] = {
-            -0.5f, -0.5f,   0.5f,
-             0.5f, -0.5f,   0.5f,
-             0.5f,  0.5f,   0.5f,
-            -0.5f,  0.5f,   0.5f,
-            -0.5f, -0.5f,  -0.5f,
-             0.5f, -0.5f,  -0.5f,
-             0.5f,  0.5f,  -0.5f,
-            -0.5f,  0.5f,  -0.5f,
+            -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
+             0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+             0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+             0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f, 0.0f, 1.0f
         };
         unsigned int indicesCube[] = {
             0,1,2,
@@ -154,10 +157,17 @@ int main()
 
         VertexBufferLayout layout;
         layout.Push<float>(3);
+        layout.Push<float>(2);
         va.AddBuffer(vb, layout);
 
         IndexBuffer ibCube(indicesCube, 36);
         IndexBuffer ibLine(indicesLine, 24);
+        //IndexBuffer ibCube(indicesCube, 6);
+        //IndexBuffer ibLine(indicesLine, 8);
+
+        Texture texture("res/texture/kun.jpeg");
+        texture.Bind();
+
 
         float r = 0.0f;
         float increment = 0.05f;
@@ -176,30 +186,33 @@ int main()
 
             //cube
             shaderCube.Bind();
+            texture.Bind();
+            shaderCube.SetUniform1i("u_Texture", 0);
 
             shaderCube.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
             // 设置模型矩阵
-            shaderCube.SetUniformMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelMatrix));
+            shaderCube.SetUniformMatrix4fv("model", 1, GL_FALSE, modelMatrix);
             // 设置视图矩阵
             glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-            shaderCube.SetUniformMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            shaderCube.SetUniformMatrix4fv("view", 1, GL_FALSE, view);
             // 设置投影矩阵
             glm::mat4 projection = glm::perspective(glm::radians(fov), WIDTH / HIGTH, 0.1f, 100.0f);
-            shaderCube.SetUniformMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            shaderCube.SetUniformMatrix4fv("projection", 1, GL_FALSE, projection);
             // DrawCall
             renderer.Draw(va, ibCube, GL_TRIANGLES, shaderCube);
 
 
             //Line
             shaderLine.Bind();
+            texture.UnBind();
 
             shaderLine.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
             // 设置模型矩阵
-            shaderLine.SetUniformMatrix4fv("model", 1, GL_FALSE, glm::value_ptr(modelMatrix));
+            shaderLine.SetUniformMatrix4fv("model", 1, GL_FALSE, modelMatrix);
             // 设置视图矩阵
-            shaderLine.SetUniformMatrix4fv("view", 1, GL_FALSE, glm::value_ptr(view));
+            shaderLine.SetUniformMatrix4fv("view", 1, GL_FALSE, view);
             // 设置投影矩阵
-            shaderLine.SetUniformMatrix4fv("projection", 1, GL_FALSE, glm::value_ptr(projection));
+            shaderLine.SetUniformMatrix4fv("projection", 1, GL_FALSE, projection);
             // DrawCall
             renderer.Draw(va, ibLine, GL_LINES, shaderLine);
 
