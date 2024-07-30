@@ -184,6 +184,8 @@ int main()
             else if (r < 0.0f) increment = 0.03f;
             r += increment;
 
+            //modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f)) * modelMatrix;
+            
             //cube
             shaderCube.Bind();
             texture.Bind();
