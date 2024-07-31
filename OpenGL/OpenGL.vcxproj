@@ -143,6 +143,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Vendor\imGUI\imgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_demo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_draw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_impl_glfw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_tables.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_widgets.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\Vendor\stb_imagecpp.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -161,6 +179,13 @@
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Vendor\imGUI\imconfig.h" />
+    <ClInclude Include="src\Vendor\imGUI\imgui.h" />
+    <ClInclude Include="src\Vendor\imGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="src\Vendor\imGUI\imgui_internal.h" />
+    <ClInclude Include="src\Vendor\imGUI\imstb_rectpack.h" />
+    <ClInclude Include="src\Vendor\imGUI\imstb_textedit.h" />
+    <ClInclude Include="src\Vendor\imGUI\imstb_truetype.h" />
     <ClInclude Include="src\Vendor\stb_image.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />

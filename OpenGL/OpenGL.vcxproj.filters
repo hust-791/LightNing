@@ -36,10 +36,28 @@
     <ClCompile Include="src\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="src\Vendor\stb_imagecpp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
+    <ClCompile Include="src\Vendor\imGUI\imgui.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_demo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_draw.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_impl_glfw.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_tables.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_widgets.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,10 +86,31 @@
     <ClInclude Include="src\stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Texture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="src\Vendor\stb_image.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Texture.h">
+    <ClInclude Include="src\Vendor\imGUI\imconfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vendor\imGUI\imgui.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vendor\imGUI\imgui_impl_glfw.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vendor\imGUI\imgui_internal.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vendor\imGUI\imstb_rectpack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vendor\imGUI\imstb_textedit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vendor\imGUI\imstb_truetype.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
