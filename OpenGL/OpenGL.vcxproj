@@ -112,7 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)depend\glfw\include;$(SolutionDir)depend\glad\include\glad;$(SolutionDir)depend\glad\include\KHR;$(SolutionDir)depend\glad\include;$(SolutionDir)depend\glm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)depend\glfw\include;$(SolutionDir)depend\glad\include\glad;$(SolutionDir)depend\glad\include\KHR;$(SolutionDir)depend\glad\include;$(SolutionDir)depend\glm;$(SolutionDir)src\Vendor</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -131,7 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\depend\glfw\include;$(ProjectDir)..\depend\glad\include\glad;$(ProjectDir)..\depend\glad\include\KHR;$(ProjectDir)..\depend\glad\include;$(ProjectDir)..\depend\glm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)depend\glfw\include;$(SolutionDir)depend\glad\include\glad;$(SolutionDir)depend\glad\include\KHR;$(SolutionDir)depend\glad\include;$(SolutionDir)depend\glm;$(SolutionDir)src\Vendor</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,6 +153,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Vendor\imGUI\imgui_impl_glfw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Vendor\imGUI\imgui_impl_opengl3.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Vendor\imGUI\imgui_tables.cpp">
@@ -182,6 +185,8 @@
     <ClInclude Include="src\Vendor\imGUI\imconfig.h" />
     <ClInclude Include="src\Vendor\imGUI\imgui.h" />
     <ClInclude Include="src\Vendor\imGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="src\Vendor\imGUI\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\Vendor\imGUI\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="src\Vendor\imGUI\imgui_internal.h" />
     <ClInclude Include="src\Vendor\imGUI\imstb_rectpack.h" />
     <ClInclude Include="src\Vendor\imGUI\imstb_textedit.h" />

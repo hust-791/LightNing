@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
-#define WIDTH 800.0f
-#define HIGTH 600.0f
+#define WIDTH 1280.0f
+#define HIGTH 720.0f
 
 // 鼠标状态变量
 bool isLeftClick = false;
@@ -92,10 +92,20 @@ int main()
 
     glfwSwapInterval(1);
 
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330 core");
+
+
     // 注册鼠标事件处理器
-    glfwSetMouseButtonCallback(window, mouse_button_callback);
-    glfwSetCursorPosCallback(window, cursor_position_callback);
-    glfwSetScrollCallback(window, scroll_callback);
+    //glfwSetMouseButtonCallback(window, mouse_button_callback);
+    //glfwSetCursorPosCallback(window, cursor_position_callback);
+    //glfwSetScrollCallback(window, scroll_callback);
 
     // 初始化GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -169,8 +179,7 @@ int main()
         texture.Bind();
 
 
-        float r = 0.0f;
-        float increment = 0.05f;
+        float r[3] = { 0.0f,0.0f,0.0f };
 
         Renderer renderer;
         // 主循环
@@ -179,19 +188,22 @@ int main()
             // 清屏
             renderer.Clear();
 
-            // 更新颜色
-            if (r > 1.0f) increment = -0.03f;
-            else if (r < 0.0f) increment = 0.03f;
-            r += increment;
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
 
-            //modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f)) * modelMatrix;
+            ImGui::SliderFloat3("Rotation", r, 1.0f, 360.0f);
+
+            modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(r[0]), glm::vec3(0.0f, 1.0f, 0.0f)) * 
+                          glm::rotate(glm::mat4(1.0f), glm::radians(r[1]), glm::vec3(1.0f, 0.0f, 0.0f)) *
+                          glm::rotate(glm::mat4(1.0f), glm::radians(r[2]), glm::vec3(0.0f, 0.0f, 1.0f));
             
             //cube
             shaderCube.Bind();
             texture.Bind();
             shaderCube.SetUniform1i("u_Texture", 0);
 
-            shaderCube.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
+            shaderCube.SetUniform4f("u_Color", 0.0f, 0.3f, 0.8f, 1.0f);
             // 设置模型矩阵
             shaderCube.SetUniformMatrix4fv("model", 1, GL_FALSE, modelMatrix);
             // 设置视图矩阵
@@ -218,12 +230,20 @@ int main()
             // DrawCall
             renderer.Draw(va, ibLine, GL_LINES, shaderLine);
 
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
             // 交换缓冲区
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
     }
     // 清理资源
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+    glfwDestroyWindow(window);
     glfwTerminate();
 
     return 0;

@@ -8,6 +8,9 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include "Vendor/imGUI/imgui_impl_glfw.h"
+#include "Vendor/imGUI/imgui_impl_opengl3.h"
+
 
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
