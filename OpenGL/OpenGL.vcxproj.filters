@@ -63,6 +63,15 @@
     <ClCompile Include="src\Vendor\imGUI\imgui_impl_opengl3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\ClearColorTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TestBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -120,6 +129,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Vendor\imGUI\imgui_impl_opengl3_loader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ClearColorTest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextureTest.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

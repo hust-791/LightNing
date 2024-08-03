@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include "ClearColorTest.h"
+#include "TextureTest.h"
 
 #define WIDTH 1280.0f
 #define HIGTH 720.0f
@@ -70,7 +72,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         fov = 45.0f;
 }
 
-// 主函数
 int main() 
 {
     // 初始化GLFW
@@ -101,12 +102,6 @@ int main()
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
 
-
-    // 注册鼠标事件处理器
-    //glfwSetMouseButtonCallback(window, mouse_button_callback);
-    //glfwSetCursorPosCallback(window, cursor_position_callback);
-    //glfwSetScrollCallback(window, scroll_callback);
-
     // 初始化GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -114,121 +109,44 @@ int main()
         return -1;
     }
 
-    GLCall(glEnable(GL_BLEND));
-    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
     {
-        // 创建着色器程序
-        Shader shaderCube("res/shaders/Basic.shader");
-        Shader shaderLine("res/shaders/Basic.shader");
-
-        GLfloat vertices[] = {
-            -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-             0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-             0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-             0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-             0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f, 0.0f, 1.0f
-        };
-        unsigned int indicesCube[] = {
-            0,1,2,
-            2,3,0,
-            1,5,6,
-            6,2,1,
-            4,0,3,
-            3,7,4,
-            3,2,6,
-            6,7,3,
-            4,5,1,
-            1,0,4,
-            5,4,7,
-            7,6,5
-        };
-        unsigned int indicesLine[] = {
-            0,1,
-            1,2,
-            2,3,
-            3,0,
-            0,4,
-            1,5,
-            2,6,
-            3,7,
-            4,5,
-            5,6,
-            6,7,
-            7,4
-        };
-
-        // 配置顶点缓冲对象和顶点数组对象
-        VertexArray va;
-        VertexBuffer vb(vertices, sizeof(vertices));
-
-        VertexBufferLayout layout;
-        layout.Push<float>(3);
-        layout.Push<float>(2);
-        va.AddBuffer(vb, layout);
-
-        IndexBuffer ibCube(indicesCube, 36);
-        IndexBuffer ibLine(indicesLine, 24);
-        //IndexBuffer ibCube(indicesCube, 6);
-        //IndexBuffer ibLine(indicesLine, 8);
-
-        Texture texture("res/texture/kun.jpeg");
-        texture.Bind();
-
-
-        float r[3] = { 0.0f,0.0f,0.0f };
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
         Renderer renderer;
+
+        Test::TestBase* curTest = NULL;
+        Test::TestMenu* testMenu = new Test::TestMenu(curTest);
+        curTest = testMenu;
+
+        testMenu->RegisterTest<Test::ClearColorTest>("clear color");
+        testMenu->RegisterTest<Test::TextureTest>("2D Texture");
         // 主循环
         while (!glfwWindowShouldClose(window))
         {
             // 清屏
+            GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));
             renderer.Clear();
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            ImGui::SliderFloat3("Rotation", r, 1.0f, 360.0f);
+            if (curTest)
+            {
+                curTest->OnUpdata(0.0f);
+                curTest->OnRender();
 
-            modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(r[0]), glm::vec3(0.0f, 1.0f, 0.0f)) * 
-                          glm::rotate(glm::mat4(1.0f), glm::radians(r[1]), glm::vec3(1.0f, 0.0f, 0.0f)) *
-                          glm::rotate(glm::mat4(1.0f), glm::radians(r[2]), glm::vec3(0.0f, 0.0f, 1.0f));
-            
-            //cube
-            shaderCube.Bind();
-            texture.Bind();
-            shaderCube.SetUniform1i("u_Texture", 0);
+                ImGui::Begin("Test");
 
-            shaderCube.SetUniform4f("u_Color", 0.0f, 0.3f, 0.8f, 1.0f);
-            // 设置模型矩阵
-            shaderCube.SetUniformMatrix4fv("model", 1, GL_FALSE, modelMatrix);
-            // 设置视图矩阵
-            glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-            shaderCube.SetUniformMatrix4fv("view", 1, GL_FALSE, view);
-            // 设置投影矩阵
-            glm::mat4 projection = glm::perspective(glm::radians(fov), WIDTH / HIGTH, 0.1f, 100.0f);
-            shaderCube.SetUniformMatrix4fv("projection", 1, GL_FALSE, projection);
-            // DrawCall
-            renderer.Draw(va, ibCube, GL_TRIANGLES, shaderCube);
-
-
-            //Line
-            shaderLine.Bind();
-            texture.UnBind();
-
-            shaderLine.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-            // 设置模型矩阵
-            shaderLine.SetUniformMatrix4fv("model", 1, GL_FALSE, modelMatrix);
-            // 设置视图矩阵
-            shaderLine.SetUniformMatrix4fv("view", 1, GL_FALSE, view);
-            // 设置投影矩阵
-            shaderLine.SetUniformMatrix4fv("projection", 1, GL_FALSE, projection);
-            // DrawCall
-            renderer.Draw(va, ibLine, GL_LINES, shaderLine);
+                if (curTest != testMenu && ImGui::Button("<-"))
+                {
+                    delete curTest;
+                    curTest = testMenu;
+                }
+                curTest->OnImGuiRender();
+                ImGui::End();
+            }
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -236,6 +154,12 @@ int main()
             // 交换缓冲区
             glfwSwapBuffers(window);
             glfwPollEvents();
+        }
+
+        delete testMenu;
+        if (curTest != testMenu)
+        {
+            delete curTest;
         }
     }
     // 清理资源

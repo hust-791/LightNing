@@ -143,6 +143,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ClearColorTest.cpp" />
+    <ClCompile Include="src\TestBase.cpp" />
     <ClCompile Include="src\Vendor\imGUI\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -177,11 +179,14 @@
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
+    <ClCompile Include="src\TextureTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ClearColorTest.h" />
+    <ClInclude Include="src\TestBase.h" />
     <ClInclude Include="src\Vendor\imGUI\imconfig.h" />
     <ClInclude Include="src\Vendor\imGUI\imgui.h" />
     <ClInclude Include="src\Vendor\imGUI\imgui_impl_glfw.h" />
@@ -200,6 +205,7 @@
     <ClInclude Include="src\VertexBuffer.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\VertexBufferLayout.h" />
+    <ClInclude Include="src\TextureTest.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\texture\kun.jpeg" />

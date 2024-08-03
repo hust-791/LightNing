@@ -93,7 +93,8 @@ unsigned int Shader::__CompileShader(const std::string& source, unsigned int typ
     glCompileShader(shader);
     GLint success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
+    if (!success) 
+    {
         GLchar infoLog[512];
         glGetShaderInfoLog(shader, 512, NULL, infoLog);
         std::cerr << "ERROR::" << (type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT") << "::COMPILATION_FAILED\n" << infoLog << std::endl;
