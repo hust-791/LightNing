@@ -90,17 +90,26 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
-
     glfwSwapInterval(1);
 
+    IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
     ImGui::StyleColorsDark();
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
+
+
     ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330 core");
+    ImGui_ImplOpenGL3_Init("#version 410");
 
     // 初始化GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -118,7 +127,7 @@ int main()
         Test::TestBase* curTest = NULL;
         Test::TestMenu* testMenu = new Test::TestMenu(curTest);
         curTest = testMenu;
-
+        bool b = true;
         testMenu->RegisterTest<Test::ClearColorTest>("clear color");
         testMenu->RegisterTest<Test::TextureTest>("2D Texture");
         // 主循环
@@ -131,13 +140,12 @@ int main()
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-
+            static bool show = true;
+            ImGui::ShowDemoWindow(&show);// 当前OnImGuiRender层显示DemoUI窗口
             if (curTest)
             {
                 curTest->OnUpdata(0.0f);
                 curTest->OnRender();
-
-                ImGui::Begin("Test");
 
                 if (curTest != testMenu && ImGui::Button("<-"))
                 {
@@ -145,11 +153,22 @@ int main()
                     curTest = testMenu;
                 }
                 curTest->OnImGuiRender();
-                ImGui::End();
+
             }
 
+            ImGuiIO& io = ImGui::GetIO();
+            io.DisplaySize = ImVec2((int)WIDTH, (int)HIGTH);
+            // Rendering
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+            {
+                GLFWwindow* backup_current_context = glfwGetCurrentContext();
+                ImGui::UpdatePlatformWindows();
+                ImGui::RenderPlatformWindowsDefault();
+                glfwMakeContextCurrent(backup_current_context);
+            }
 
             // 交换缓冲区
             glfwSwapBuffers(window);

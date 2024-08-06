@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "TextureTest.h"
+#include "Vendor/imGUI/imgui_demo.cpp"
 
 namespace Test
 {
@@ -14,11 +15,10 @@ namespace Test
 	float fov = 45.0f;
 
 
-	TextureTest::TextureTest() :m_rotation{ 0.0f,0.0f,0.0f }
+	TextureTest::TextureTest() :m_rotation{ 0.0f,0.0f,0.0f }, m_isAuto{ 0,0,0 }
 	{
 		// 创建着色器程序
 		m_shader = std::make_unique<Shader>("res/shaders/Basic.shader");
-		//Shader shaderLine("res/shaders/Basic.shader");
 
 		GLfloat vertices[] = {
 			-0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
@@ -80,6 +80,15 @@ namespace Test
 
 	void TextureTest::OnUpdata(float deltaTime)
 	{
+		for (int i = 0; i < 3; ++i)
+		{
+			if (m_isAuto[i])
+			{
+				if (m_rotation[i] > 360)
+					m_rotation[i] = 0;
+				m_rotation[i]++;
+			}
+		}
 	}
 
 	void TextureTest::OnRender()
@@ -92,10 +101,10 @@ namespace Test
 
 		//cube
 		m_shader->Bind();
-		m_texture->Bind();
+		m_texture->Bind(1);
 
-		m_shader->SetUniform1i("u_Texture", 0);
-		m_shader->SetUniform4f("u_Color", 0.0f, 0.3f, 0.8f, 1.0f);
+		m_shader->SetUniform1i("u_Texture", 1);
+		m_shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 		// 设置模型矩阵
 		m_shader->SetUniformMatrix4fv("model", 1, GL_FALSE, modelMatrix);
 		// 设置视图矩阵
@@ -109,7 +118,8 @@ namespace Test
 
 
 		//Line
-		m_shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+		m_texture->Bind();
+		m_shader->SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
 		// DrawCall
 		renderer.Draw(*m_VAO, *m_IBO_line, GL_LINES, *m_shader);
 	}
@@ -117,5 +127,8 @@ namespace Test
 	void TextureTest::OnImGuiRender()
 	{
 		ImGui::SliderFloat3("Rotation", m_rotation, 1.0f, 360.0f);
+		ImGui::Checkbox("Auto X", m_isAuto);
+		ImGui::Checkbox("Auto Y", m_isAuto + sizeof(bool));
+		ImGui::Checkbox("Auto Z", m_isAuto + 2*sizeof(bool));
 	}
 }

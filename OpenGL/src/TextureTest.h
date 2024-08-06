@@ -22,5 +22,6 @@ namespace Test
 		std::unique_ptr<Texture> m_texture;
 
 		float m_rotation[3];
+		bool  m_isAuto[3];
 	};
 }
