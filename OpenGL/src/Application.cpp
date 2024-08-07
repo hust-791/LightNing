@@ -90,8 +90,12 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
-
     glfwSwapInterval(1);
+
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+
 
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -100,7 +104,7 @@ int main()
 
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330 core");
+    ImGui_ImplOpenGL3_Init("#version 410");
 
     // ≥ı ºªØGLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
