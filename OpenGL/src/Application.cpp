@@ -22,6 +22,7 @@ glm::mat4 modelMatrix = glm::mat4(1.0f);
 // 鼠标按钮事件处理器
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
+
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
         // 开始记录鼠标位置用于旋转
@@ -129,10 +130,9 @@ int main()
 
         Renderer renderer;
 
-        Test::TestBase* curTest = NULL;
-        Test::TestMenu* testMenu = new Test::TestMenu(curTest);
-        curTest = testMenu;
-        bool b = true;
+        Test::TestMenu* testMenu = new Test::TestMenu(window);
+        testMenu->SetCurrentTest(testMenu);
+
         testMenu->RegisterTest<Test::ClearColorTest>("clear color");
         testMenu->RegisterTest<Test::TextureTest>("2D Texture");
         // 主循环
@@ -145,20 +145,18 @@ int main()
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-            static bool show = true;
-            ImGui::ShowDemoWindow(&show);// 当前OnImGuiRender层显示DemoUI窗口
-            if (curTest)
+
+            if (Test::TestMenu::GetCurrentTest())
             {
-                curTest->OnUpdata(0.0f);
-                curTest->OnRender();
+                Test::TestMenu::GetCurrentTest()->OnUpdata(0.0f);
+                Test::TestMenu::GetCurrentTest()->OnRender();
 
-                if (curTest != testMenu && ImGui::Button("<-"))
+                if (Test::TestMenu::GetCurrentTest() != testMenu && ImGui::Button("<-"))
                 {
-                    delete curTest;
-                    curTest = testMenu;
+                    delete Test::TestMenu::GetCurrentTest();
+                    testMenu->SetCurrentTest(testMenu);
                 }
-                curTest->OnImGuiRender();
-
+                Test::TestMenu::GetCurrentTest()->OnImGuiRender();
             }
 
             ImGuiIO& io = ImGui::GetIO();
@@ -181,9 +179,9 @@ int main()
         }
 
         delete testMenu;
-        if (curTest != testMenu)
+        if (Test::TestMenu::GetCurrentTest() != testMenu)
         {
-            delete curTest;
+            delete Test::TestMenu::GetCurrentTest();
         }
     }
     // 清理资源

@@ -126,7 +126,7 @@ namespace Test
 
 	void TextureTest::OnImGuiRender()
 	{
-		ImGui::SliderFloat3("Rotation", m_rotation, 1.0f, 360.0f);
+		ImGui::SliderFloat3("Rotation", m_rotation, 0.0f, 360.0f);
 		ImGui::Checkbox("Auto X", m_isAuto);
 		ImGui::Checkbox("Auto Y", m_isAuto + sizeof(bool));
 		ImGui::Checkbox("Auto Z", m_isAuto + 2*sizeof(bool));

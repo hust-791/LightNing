@@ -13,6 +13,12 @@ namespace Test
 		void OnRender()override;
 		void OnImGuiRender()override;
 
+		virtual void OnMouseClick(GLFWwindow* window, int button, int action, int mods) {
+			ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+			std::cout << "TextureTest click!" << std::endl; }
+		virtual void OnMouseMove(GLFWwindow* window, double xpos, double ypos) {}
+		virtual void OnMouseScroll(GLFWwindow* window, double xoffset, double yoffset) {}
+
 	private:
 		std::unique_ptr<Shader> m_shader;
 		std::unique_ptr<VertexArray> m_VAO;

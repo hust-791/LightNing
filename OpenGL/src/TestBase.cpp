@@ -3,7 +3,10 @@
 
 
 using namespace Test;
-TestMenu::TestMenu(TestBase*& test):m_currentTest(test)
+
+TestBase* TestMenu::m_currentTest = nullptr;
+
+TestMenu::TestMenu(GLFWwindow* window) :m_window(window)
 {
 }
 
@@ -18,6 +21,15 @@ void TestMenu::OnImGuiRender()
 		if (ImGui::Button(test.first.c_str()))
 		{
 			m_currentTest = test.second();
+			if (m_currentTest)
+			{
+				glfwSetMouseButtonCallback(m_window, MouseClickCallBack);
+			}
 		}
 	}
+}
+
+void Test::TestMenu::MouseClickCallBack(GLFWwindow* window, int button, int action, int mods)
+{
+	m_currentTest->OnMouseClick(window, button, action, mods);
 }
