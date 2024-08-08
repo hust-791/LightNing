@@ -12,9 +12,7 @@ namespace Test
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
 
-		virtual void OnMouseClick(GLFWwindow* window, int button, int action, int mods) {
-			ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
-			std::cout << "base click!" << std::endl; }
+		virtual void OnMouseClick(GLFWwindow* window, int button, int action, int mods) {}
 		virtual void OnMouseMove(GLFWwindow* window, double xpos, double ypos){}
 		virtual void OnMouseScroll(GLFWwindow* window, double xoffset, double yoffset){}
 
@@ -30,7 +28,6 @@ namespace Test
 		void OnImGuiRender() override;
 
 		virtual void OnMouseClick(GLFWwindow* window, int button, int action, int mods) {
-			ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
 			std::cout << "TestMenu click!" << std::endl;
 		}
 

@@ -8,6 +8,7 @@ TestBase* TestMenu::m_currentTest = nullptr;
 
 TestMenu::TestMenu(GLFWwindow* window) :m_window(window)
 {
+	SetCurrentTest(this);
 }
 
 TestMenu::~TestMenu()
@@ -31,5 +32,6 @@ void TestMenu::OnImGuiRender()
 
 void Test::TestMenu::MouseClickCallBack(GLFWwindow* window, int button, int action, int mods)
 {
+	ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
 	m_currentTest->OnMouseClick(window, button, action, mods);
 }

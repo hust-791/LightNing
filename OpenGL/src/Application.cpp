@@ -131,7 +131,6 @@ int main()
         Renderer renderer;
 
         Test::TestMenu* testMenu = new Test::TestMenu(window);
-        testMenu->SetCurrentTest(testMenu);
 
         testMenu->RegisterTest<Test::ClearColorTest>("clear color");
         testMenu->RegisterTest<Test::TextureTest>("2D Texture");

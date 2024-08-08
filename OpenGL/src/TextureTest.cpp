@@ -131,4 +131,15 @@ namespace Test
 		ImGui::Checkbox("Auto Y", m_isAuto + sizeof(bool));
 		ImGui::Checkbox("Auto Z", m_isAuto + 2*sizeof(bool));
 	}
+
+	void TextureTest::OnMouseClick(GLFWwindow* window, int button, int action, int mods)
+	{
+		std::cout << "TextureTest click!" << std::endl;
+	}
+	void TextureTest::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
+	{
+	}
+	void TextureTest::OnMouseScroll(GLFWwindow* window, double xoffset, double yoffset)
+	{
+	}
 }
