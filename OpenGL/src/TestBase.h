@@ -1,4 +1,5 @@
 #pragma once
+#include "Event.h"
 
 namespace Test
 {
@@ -12,9 +13,7 @@ namespace Test
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
 
-		virtual void OnMouseClick(GLFWwindow* window, int button, int action, int mods) {}
-		virtual void OnMouseMove(GLFWwindow* window, double xpos, double ypos){}
-		virtual void OnMouseScroll(GLFWwindow* window, double xoffset, double yoffset){}
+		virtual void OnEvent(Event& e){}
 
 	};
 
@@ -27,23 +26,29 @@ namespace Test
 
 		void OnImGuiRender() override;
 
-		virtual void OnMouseClick(GLFWwindow* window, int button, int action, int mods) {
-			std::cout << "TestMenu click!" << std::endl;
+		virtual void OnEvent(Event& e) override
+		{
+			EventDispatcher dispatcher(e);
+
+			dispatcher.Dispatch<MouseButtonPressedEvent>([this](auto&&... args) -> decltype(auto) { return this->OnMouseButtonPressed(std::forward<decltype(args)>(args)...);});
+
+		}
+
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e)
+		{
+			std::cout << "TestMenu pressed!" << std::endl;
+			return false;
 		}
 
 		void SetCurrentTest(TestBase* test)
 		{
 			m_currentTest = test;
-			glfwSetMouseButtonCallback(m_window, MouseClickCallBack);
 		}
 
 		static TestBase*& GetCurrentTest()
 		{
 			return m_currentTest;
 		}
-
-
-		static void MouseClickCallBack(GLFWwindow* window, int button, int action, int mods);
 
 		template<class T>
 		void RegisterTest(const std::string& name)

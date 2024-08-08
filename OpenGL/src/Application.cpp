@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ClearColorTest.h"
 #include "TextureTest.h"
+#include "Event.h"
 
 #define WIDTH 1280.0f
 #define HIGTH 720.0f
@@ -19,6 +20,8 @@ glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 glm::mat4 modelMatrix = glm::mat4(1.0f);
+
+Test::TestMenu* g_testMenu = nullptr;
 // 鼠标按钮事件处理器
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
@@ -73,6 +76,22 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         fov = 45.0f;
 }
 
+void OnEvent(Event& e)
+{
+    g_testMenu->GetCurrentTest()->OnEvent(e);
+}
+
+using EventCallbackFn = std::function<void(Event&)>;
+
+struct WindowData
+{
+    std::string Title;
+    unsigned int Width, Height;
+    bool VSync;
+
+    EventCallbackFn EventCallback;
+};
+
 int main() 
 {
     // 初始化GLFW
@@ -83,7 +102,7 @@ int main()
     }
 
     // 创建窗口
-    GLFWwindow* window = glfwCreateWindow((int)WIDTH, (int)HIGTH, "OpenGL Cube", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow((int)WIDTH, (int)HIGTH, "OpenGL Center", NULL, NULL);
     if (!window) 
     {
         std::cerr << "Failed to create GLFW window." << std::endl;
@@ -93,9 +112,44 @@ int main()
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    glfwSetMouseButtonCallback(window, mouse_button_callback);
-    glfwSetCursorPosCallback(window, cursor_position_callback);
-    glfwSetScrollCallback(window, scroll_callback);
+    g_testMenu = new Test::TestMenu(window);
+
+    WindowData windowData;
+
+    windowData.Title = "OpenGL Center";
+    windowData.Height = (int)HIGTH;
+    windowData.Width  = (int)WIDTH;
+
+    windowData.EventCallback = OnEvent;
+
+    glfwSetWindowUserPointer(window, &windowData);
+
+    glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            switch (action)
+            {
+                case GLFW_PRESS:
+                {
+                    MouseButtonPressedEvent event(button);
+                    data.EventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE:
+                {
+                    MouseButtonReleasedEvent event(button);
+                    data.EventCallback(event);
+                    break;
+                }
+            }
+        });
+
+
+
+
+
+
 
 
     IMGUI_CHECKVERSION();
@@ -130,10 +184,9 @@ int main()
 
         Renderer renderer;
 
-        Test::TestMenu* testMenu = new Test::TestMenu(window);
 
-        testMenu->RegisterTest<Test::ClearColorTest>("clear color");
-        testMenu->RegisterTest<Test::TextureTest>("2D Texture");
+        g_testMenu->RegisterTest<Test::ClearColorTest>("clear color");
+        g_testMenu->RegisterTest<Test::TextureTest>("2D Texture");
         // 主循环
         while (!glfwWindowShouldClose(window))
         {
@@ -150,10 +203,10 @@ int main()
                 Test::TestMenu::GetCurrentTest()->OnUpdata(0.0f);
                 Test::TestMenu::GetCurrentTest()->OnRender();
 
-                if (Test::TestMenu::GetCurrentTest() != testMenu && ImGui::Button("<-"))
+                if (Test::TestMenu::GetCurrentTest() != g_testMenu && ImGui::Button("<-"))
                 {
                     delete Test::TestMenu::GetCurrentTest();
-                    testMenu->SetCurrentTest(testMenu);
+                    g_testMenu->SetCurrentTest(g_testMenu);
                 }
                 Test::TestMenu::GetCurrentTest()->OnImGuiRender();
             }
@@ -177,8 +230,8 @@ int main()
             glfwPollEvents();
         }
 
-        delete testMenu;
-        if (Test::TestMenu::GetCurrentTest() != testMenu)
+        delete g_testMenu;
+        if (Test::TestMenu::GetCurrentTest() != g_testMenu)
         {
             delete Test::TestMenu::GetCurrentTest();
         }

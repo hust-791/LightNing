@@ -13,9 +13,7 @@ namespace Test
 		void OnRender()override;
 		void OnImGuiRender()override;
 
-		void OnMouseClick(GLFWwindow* window, int button, int action, int mods)override;
-		void OnMouseMove(GLFWwindow* window, double xpos, double ypos)override;
-		void OnMouseScroll(GLFWwindow* window, double xoffset, double yoffset)override;
+		virtual void OnEvent(Event& e)override;
 
 	private:
 		std::unique_ptr<Shader> m_shader;

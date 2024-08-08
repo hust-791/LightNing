@@ -4,8 +4,8 @@
 
 namespace Test
 {
-	#define WIDTH 1280.0f
-	#define HIGTH 720.0f
+#define WIDTH 1280.0f
+#define HIGTH 720.0f
 
 	// 相机位置和方向
 	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -96,8 +96,8 @@ namespace Test
 		Renderer renderer;
 
 		glm::mat4 modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[0]), glm::vec3(0.0f, 1.0f, 0.0f)) *
-								glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[1]), glm::vec3(1.0f, 0.0f, 0.0f)) *
-								glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
+			glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[1]), glm::vec3(1.0f, 0.0f, 0.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		//cube
 		m_shader->Bind();
@@ -129,17 +129,11 @@ namespace Test
 		ImGui::SliderFloat3("Rotation", m_rotation, 0.0f, 360.0f);
 		ImGui::Checkbox("Auto X", m_isAuto);
 		ImGui::Checkbox("Auto Y", m_isAuto + sizeof(bool));
-		ImGui::Checkbox("Auto Z", m_isAuto + 2*sizeof(bool));
+		ImGui::Checkbox("Auto Z", m_isAuto + 2 * sizeof(bool));
 	}
 
-	void TextureTest::OnMouseClick(GLFWwindow* window, int button, int action, int mods)
+	void TextureTest::OnEvent(Event& e)
 	{
 		std::cout << "TextureTest click!" << std::endl;
-	}
-	void TextureTest::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
-	{
-	}
-	void TextureTest::OnMouseScroll(GLFWwindow* window, double xoffset, double yoffset)
-	{
 	}
 }

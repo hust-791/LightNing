@@ -22,16 +22,6 @@ void TestMenu::OnImGuiRender()
 		if (ImGui::Button(test.first.c_str()))
 		{
 			m_currentTest = test.second();
-			if (m_currentTest)
-			{
-				glfwSetMouseButtonCallback(m_window, MouseClickCallBack);
-			}
 		}
 	}
-}
-
-void Test::TestMenu::MouseClickCallBack(GLFWwindow* window, int button, int action, int mods)
-{
-	ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
-	m_currentTest->OnMouseClick(window, button, action, mods);
 }

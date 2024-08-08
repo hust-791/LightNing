@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ClearColorTest.cpp" />
+    <ClCompile Include="src\Event.cpp" />
     <ClCompile Include="src\TestBase.cpp" />
     <ClCompile Include="src\Vendor\imGUI\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -183,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ClearColorTest.h" />
+    <ClInclude Include="src\Event.h" />
     <ClInclude Include="src\TestBase.h" />
     <ClInclude Include="src\Vendor\imGUI\imconfig.h" />
     <ClInclude Include="src\Vendor\imGUI\imgui.h" />
