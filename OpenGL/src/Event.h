@@ -45,6 +45,9 @@ public:
 	}
 };
 
+
+#define EVENT_BIND_FUNC(func) [this](auto&&... args)->decltype(auto) {return this->func(std::forward<decltype(args)>(args)...);}
+
 class EventDispatcher
 {
 public:
@@ -115,3 +118,46 @@ public:
 	EVENT_CLASS_TYPE(MouseButtonReleased)
 };
 
+class MouseMoveEvent :public Event
+{
+public:
+	MouseMoveEvent(double xpos, double ypos):m_xPos(xpos),m_yPos(ypos){}
+
+
+	EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+	EVENT_CLASS_TYPE(MouseMoved)
+
+	double m_xPos, m_yPos;
+};
+
+class MouseScrolledEvent :public Event
+{
+public:
+	MouseScrolledEvent(double xoffset, double yoffset) :m_xOffect(xoffset), m_yOffect(yoffset) {}
+
+
+	EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
+	EVENT_CLASS_TYPE(MouseScrolled)
+
+	double m_xOffect, m_yOffect;
+};
+
+class KeyEvent :public Event
+{
+public:
+	EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
+
+protected:
+	KeyEvent(int keyCode, int mods) :m_keyCode(keyCode),m_mod(mods),m_isRepeat(false) {}
+	
+	int m_keyCode, m_mod;
+	bool m_isRepeat;
+};
+
+class KetPressedEvent :public KeyEvent
+{
+public:
+	KetPressedEvent(int keyCode, int mods) :KeyEvent(keyCode, mods) {}
+
+	EVENT_CLASS_TYPE(KeyPressed)
+};

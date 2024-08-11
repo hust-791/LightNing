@@ -6,7 +6,7 @@ namespace Test
 	class TestBase
 	{
 	public:
-		TestBase() {}
+		TestBase(GLFWwindow* window):m_window(window){}
 		virtual ~TestBase() {}
 
 		virtual void OnUpdata(float deltaTime) {}
@@ -15,6 +15,7 @@ namespace Test
 
 		virtual void OnEvent(Event& e){}
 
+		GLFWwindow* m_window;
 	};
 
 
@@ -26,19 +27,7 @@ namespace Test
 
 		void OnImGuiRender() override;
 
-		virtual void OnEvent(Event& e) override
-		{
-			EventDispatcher dispatcher(e);
-
-			dispatcher.Dispatch<MouseButtonPressedEvent>([this](auto&&... args) -> decltype(auto) { return this->OnMouseButtonPressed(std::forward<decltype(args)>(args)...);});
-
-		}
-
-		bool OnMouseButtonPressed(MouseButtonPressedEvent& e)
-		{
-			std::cout << "TestMenu pressed!" << std::endl;
-			return false;
-		}
+		static GLFWwindow* GetWindow() { return m_currentTest->m_window; }
 
 		void SetCurrentTest(TestBase* test)
 		{
@@ -53,11 +42,11 @@ namespace Test
 		template<class T>
 		void RegisterTest(const std::string& name)
 		{
-			m_Tests.push_back(std::make_pair(name, []() {return new T(); }));
+			m_Tests.push_back(std::make_pair(name, []() {return new T(GetWindow()); }));
 		}
 	private:
 		static TestBase* m_currentTest;
-		GLFWwindow* m_window;
+
 		std::vector<std::pair<std::string, std::function< TestBase* ()>>> m_Tests;
 	};
 }

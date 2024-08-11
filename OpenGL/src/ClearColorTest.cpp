@@ -4,7 +4,7 @@
 
 using namespace Test;
 
-Test::ClearColorTest::ClearColorTest() :m_Color{ 0.2f,0.3f,0.8f,1.0f }
+Test::ClearColorTest::ClearColorTest(GLFWwindow* window) :TestBase(window),m_Color{ 0.2f,0.3f,0.8f,1.0f }
 {
 }
 

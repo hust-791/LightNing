@@ -125,31 +125,46 @@ int main()
     glfwSetWindowUserPointer(window, &windowData);
 
     glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
+    {
+        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+        switch (action)
         {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-            switch (action)
+            case GLFW_PRESS:
             {
-                case GLFW_PRESS:
-                {
-                    MouseButtonPressedEvent event(button);
-                    data.EventCallback(event);
-                    break;
-                }
-                case GLFW_RELEASE:
-                {
-                    MouseButtonReleasedEvent event(button);
-                    data.EventCallback(event);
-                    break;
-                }
+                MouseButtonPressedEvent event(button);
+                data.EventCallback(event);
+                break;
             }
-        });
+            case GLFW_RELEASE:
+            {
+                MouseButtonReleasedEvent event(button);
+                data.EventCallback(event);
+                break;
+            }
+        }
+    });
 
+    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos) 
+    {
+        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
+        MouseMoveEvent event(xpos, ypos);
+        data.EventCallback(event);
+    });
 
+    glfwSetScrollCallback(window, [](GLFWwindow * window, double xoffset, double yoffset)
+    {
+        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
+        MouseScrolledEvent event(xoffset, yoffset);
+        data.EventCallback(event);
+    });
 
+    glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+    {
 
+    });
 
 
     IMGUI_CHECKVERSION();

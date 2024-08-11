@@ -7,15 +7,7 @@ namespace Test
 #define WIDTH 1280.0f
 #define HIGTH 720.0f
 
-	// 相机位置和方向
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-	float fov = 45.0f;
-
-
-	TextureTest::TextureTest() :m_rotation{ 0.0f,0.0f,0.0f }, m_isAuto{ 0,0,0 }
+	TextureTest::TextureTest(GLFWwindow* window) :TestBase(window), m_rotation{ 0.0f,0.0f,0.0f }, m_isAuto{ 0,0,0 }
 	{
 		// 创建着色器程序
 		m_shader = std::make_unique<Shader>("res/shaders/Basic.shader");
@@ -72,6 +64,9 @@ namespace Test
 		m_IBO_line = std::make_unique<IndexBuffer>(indicesLine, 24);
 
 		m_texture = std::make_unique<Texture>("res/texture/kun.jpeg");
+
+		glfwSetCursorPos(window, WIDTH / 2.0, HIGTH / 2.0);
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
 
 	TextureTest::~TextureTest()
@@ -108,10 +103,10 @@ namespace Test
 		// 设置模型矩阵
 		m_shader->SetUniformMatrix4fv("model", 1, GL_FALSE, modelMatrix);
 		// 设置视图矩阵
-		glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		glm::mat4 view = m_camera.GetCameraMatrix();
 		m_shader->SetUniformMatrix4fv("view", 1, GL_FALSE, view);
 		// 设置投影矩阵
-		glm::mat4 projection = glm::perspective(glm::radians(fov), WIDTH / HIGTH, 0.1f, 100.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(m_camera.fov), WIDTH / HIGTH, 0.1f, 100.0f);
 		m_shader->SetUniformMatrix4fv("projection", 1, GL_FALSE, projection);
 		// DrawCall
 		renderer.Draw(*m_VAO, *m_IBO, GL_TRIANGLES, *m_shader);
@@ -134,6 +129,82 @@ namespace Test
 
 	void TextureTest::OnEvent(Event& e)
 	{
-		std::cout << "TextureTest click!" << std::endl;
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<MouseButtonPressedEvent>(EVENT_BIND_FUNC(TextureTest::OnMousePressed));
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(EVENT_BIND_FUNC(TextureTest::OnMouseReleased));
+
+		dispatcher.Dispatch<MouseMoveEvent>(EVENT_BIND_FUNC(TextureTest::OnMousMove));
+		dispatcher.Dispatch<MouseScrolledEvent>(EVENT_BIND_FUNC(TextureTest::OnMousScroll));
+	}
+
+	bool TextureTest::OnMousePressed(MouseButtonPressedEvent& e)
+	{
+		switch (e.GetMouseButton())
+		{
+			case ButtonLeft:
+			{
+
+			}break;
+
+			case ButtonRight:
+			{
+				glfwSetInputMode(TestMenu::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+				glfwGetCursorPos(TestMenu::GetWindow(), &m_camera.lastX, &m_camera.lastY);
+			}break;
+
+			default:
+				break;
+		}
+
+		return false;
+	}
+	bool TextureTest::OnMouseReleased(MouseButtonReleasedEvent& e)
+	{
+		return false;
+	}
+	bool TextureTest::OnMousMove(MouseMoveEvent& e)
+	{
+		if (m_camera.firstMouse)
+		{
+			m_camera.lastX = e.m_xPos;
+			m_camera.lastY = e.m_yPos;
+			m_camera.firstMouse = false;
+		}
+
+		float xoffset = float(m_camera.lastX - e.m_xPos);
+		float yoffset = float(e.m_yPos - m_camera.lastY);
+		m_camera.lastX = e.m_xPos;
+		m_camera.lastY = e.m_yPos;
+
+		float sensitivity = 0.05f;
+		xoffset *= sensitivity;
+		yoffset *= sensitivity;
+
+		m_camera.yaw += xoffset;
+		m_camera.pitch += yoffset;
+
+		if (m_camera.pitch > 89.0f)
+			m_camera.pitch = 89.0f;
+		if (m_camera.pitch < -89.0f)
+			m_camera.pitch = -89.0f;
+
+		glm::vec3 direction;
+		direction.x = cos(glm::radians(m_camera.yaw)) * cos(glm::radians(m_camera.pitch));
+		direction.y = sin(glm::radians(m_camera.pitch));
+		direction.z = sin(glm::radians(m_camera.yaw)) * cos(glm::radians(m_camera.pitch));
+		m_camera.cameraFront = glm::normalize(direction);
+
+		return false;
+	}
+	bool TextureTest::OnMousScroll(MouseScrolledEvent& e)
+	{
+		if (m_camera.fov >= 1.0f && m_camera.fov <= 45.0f)
+			m_camera.fov -= (float)e.m_yOffect;
+		else if (m_camera.fov < 1.0f)
+			m_camera.fov = 1.0f;
+		else if (m_camera.fov > 45.0f)
+			m_camera.fov = 45.0f;
+
+		return false;
 	}
 }

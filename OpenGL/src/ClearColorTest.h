@@ -6,7 +6,7 @@ namespace Test
 	class ClearColorTest : public TestBase
 	{
 	public:
-		ClearColorTest();
+		ClearColorTest(GLFWwindow* window);
 		~ClearColorTest();
 
 		void OnUpdata(float deltaTime) override;

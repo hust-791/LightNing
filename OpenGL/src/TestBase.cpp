@@ -6,7 +6,7 @@ using namespace Test;
 
 TestBase* TestMenu::m_currentTest = nullptr;
 
-TestMenu::TestMenu(GLFWwindow* window) :m_window(window)
+TestMenu::TestMenu(GLFWwindow* window) :TestBase(window)
 {
 	SetCurrentTest(this);
 }
