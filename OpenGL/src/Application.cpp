@@ -6,78 +6,27 @@
 #define WIDTH 1280.0f
 #define HIGTH 720.0f
 
-// 鼠标状态变量
-bool isLeftClick = false;
-bool firstMouse = true;
-float lastX = WIDTH / 2.0;
-float lastY = HIGTH / 2.0;
-float yaw = -90.0f;
-float pitch = 0.0f;
-float fov = 45.0f;
-
-// 相机位置和方向
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-glm::mat4 modelMatrix = glm::mat4(1.0f);
-
 Test::TestMenu* g_testMenu = nullptr;
-// 鼠标按钮事件处理器
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+bool Running = true;
+
+
+bool OnExit(KeyPressedEvent& e)
 {
-
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    switch (e.GetKeyCode())
     {
-        // 开始记录鼠标位置用于旋转
-        isLeftClick = true;
+        case EnKeyCode::Escape:
+        {
+            Running = false;
+        }break;
     }
-    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
-    {
-        isLeftClick = false;
-        firstMouse = true;
-    }
-}
-// 鼠标光标位置事件处理器
-void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) 
-{
-    if (!isLeftClick)
-        return;
-
-    if (firstMouse) 
-    {
-        lastX = (float)xpos;
-        lastY = (float)ypos;
-        firstMouse = false;
-    }
-    float xoffset = (float)xpos - lastX;
-    float yoffset = lastY - (float)ypos; // reversed since y-coordinates go from bottom to top
-
-    lastX = (float)xpos;
-    lastY = (float)ypos;
-
-    float sensitivity = 0.1f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
-
-    // 计算旋转矩阵
-    glm::mat4 rotateX = glm::rotate(glm::mat4(1.0f), glm::radians(-yoffset), glm::vec3(1.0f, 0.0f, 0.0f));
-    glm::mat4 rotateY = glm::rotate(glm::mat4(1.0f), glm::radians(xoffset), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    modelMatrix = rotateY * rotateX * modelMatrix;
-}
-// 鼠标滚轮事件处理器
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    if (fov >= 1.0f && fov <= 45.0f)
-        fov -= (float)yoffset;
-    if (fov <= 1.0f)
-        fov = 1.0f;
-    if (fov >= 45.0f)
-        fov = 45.0f;
+    return false;
 }
 
 void OnEvent(Event& e)
 {
+    EventDispatcher dispatcher(e);
+    dispatcher.Dispatch<KeyPressedEvent>([](auto&&... args)->decltype(auto) {return OnExit(std::forward<decltype(args)>(args)...); });
+
     g_testMenu->GetCurrentTest()->OnEvent(e);
 }
 
@@ -163,8 +112,39 @@ int main()
 
     glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
     {
+        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
+        switch (action)
+        {
+            case GLFW_PRESS:
+            {
+                KeyPressedEvent event(key, 0);
+                data.EventCallback(event);
+                break;
+            }
+            case GLFW_RELEASE:
+            {
+                KeyReleasedEvent event(key);
+                data.EventCallback(event);
+                break;
+            }
+            case GLFW_REPEAT:
+            {
+                KeyPressedEvent event(key, true);
+                data.EventCallback(event);
+                break;
+            }
+        }
     });
+
+    glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int keycode)
+    {
+        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+        KeyTypedEvent event(keycode);
+        data.EventCallback(event);
+    });
+
 
 
     IMGUI_CHECKVERSION();
@@ -203,7 +183,7 @@ int main()
         g_testMenu->RegisterTest<Test::ClearColorTest>("clear color");
         g_testMenu->RegisterTest<Test::TextureTest>("2D Texture");
         // 主循环
-        while (!glfwWindowShouldClose(window))
+        while (!glfwWindowShouldClose(window) && Running)
         {
             // 清屏
             GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));

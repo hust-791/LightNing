@@ -6,23 +6,34 @@ namespace Test
 	struct Camera
 	{
 		// 相机位置和方向
-		glm::vec3 cameraPos, cameraFront, cameraUp;
-
+		glm::vec3 cameraPos, cameraFront, cameraUp, cameraRight, worldUp;
+	
 		double lastX, lastY;
-		bool firstMouse;
+		bool enable,firstMouse;
 		float yaw, pitch, fov;
+		float speed, sensitivity;
 
-		Camera()
+		Camera() :cameraPos(glm::vec3(0.0f, 0.0f, 3.0f)),
+				cameraFront(glm::vec3(0.0f, 0.0f, -1.0f)),
+				worldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
+				lastX(0), lastY(0), 
+				enable(true), firstMouse(true), 
+				yaw(-90.0f), pitch(0.0f), fov(45.0f),
+				speed(0.1f) , sensitivity(0.03f)
 		{
-			cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-			cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-			cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+			UpdataCamera();
+		}
 
-			lastX = lastY = 0;
-			firstMouse = true;
-			pitch = 0.f;
-			yaw = -90.f;
-			fov = 45.0f;
+		void UpdataCamera()
+		{
+			glm::vec3 front;
+			front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+			front.y = sin(glm::radians(pitch));
+			front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+			cameraFront = glm::normalize(front);
+
+			cameraRight = glm::normalize(glm::cross(cameraFront, worldUp));
+			cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront));
 		}
 
 		glm::mat4 GetCameraMatrix() const
@@ -46,6 +57,7 @@ namespace Test
 		bool OnMouseReleased(MouseButtonReleasedEvent& e);
 		bool OnMousMove(MouseMoveEvent& e);
 		bool OnMousScroll(MouseScrolledEvent& e);
+		bool OnKeyPressed(KeyPressedEvent& e);
 	private:
 		std::unique_ptr<Shader> m_shader;
 		std::unique_ptr<VertexArray> m_VAO;

@@ -65,6 +65,7 @@ namespace Test
 
 		m_texture = std::make_unique<Texture>("res/texture/kun.jpeg");
 
+		glEnable(GL_DEPTH_TEST);
 		glfwSetCursorPos(window, WIDTH / 2.0, HIGTH / 2.0);
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
@@ -90,9 +91,13 @@ namespace Test
 	{
 		Renderer renderer;
 
+		glm::mat4 projection = glm::perspective(glm::radians(m_camera.fov), WIDTH / HIGTH, 0.1f, 100.0f);
+		glm::mat4 view = m_camera.GetCameraMatrix();
 		glm::mat4 modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[0]), glm::vec3(0.0f, 1.0f, 0.0f)) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[1]), glm::vec3(1.0f, 0.0f, 0.0f)) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
+								glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[1]), glm::vec3(1.0f, 0.0f, 0.0f)) *
+								glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		glm::mat4 MatrixProjViewModel = projection * view * modelMatrix;
 
 		//cube
 		m_shader->Bind();
@@ -100,14 +105,7 @@ namespace Test
 
 		m_shader->SetUniform1i("u_Texture", 1);
 		m_shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-		// 设置模型矩阵
-		m_shader->SetUniformMatrix4fv("model", 1, GL_FALSE, modelMatrix);
-		// 设置视图矩阵
-		glm::mat4 view = m_camera.GetCameraMatrix();
-		m_shader->SetUniformMatrix4fv("view", 1, GL_FALSE, view);
-		// 设置投影矩阵
-		glm::mat4 projection = glm::perspective(glm::radians(m_camera.fov), WIDTH / HIGTH, 0.1f, 100.0f);
-		m_shader->SetUniformMatrix4fv("projection", 1, GL_FALSE, projection);
+		m_shader->SetUniformMatrix4fv("matrixProjViewModel", 1, GL_FALSE, MatrixProjViewModel);
 		// DrawCall
 		renderer.Draw(*m_VAO, *m_IBO, GL_TRIANGLES, *m_shader);
 
@@ -131,10 +129,11 @@ namespace Test
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseButtonPressedEvent>(EVENT_BIND_FUNC(TextureTest::OnMousePressed));
-		dispatcher.Dispatch<MouseButtonReleasedEvent>(EVENT_BIND_FUNC(TextureTest::OnMouseReleased));
+		//dispatcher.Dispatch<MouseButtonReleasedEvent>(EVENT_BIND_FUNC(TextureTest::OnMouseReleased));
 
 		dispatcher.Dispatch<MouseMoveEvent>(EVENT_BIND_FUNC(TextureTest::OnMousMove));
 		dispatcher.Dispatch<MouseScrolledEvent>(EVENT_BIND_FUNC(TextureTest::OnMousScroll));
+		dispatcher.Dispatch<KeyPressedEvent>(EVENT_BIND_FUNC(TextureTest::OnKeyPressed));
 	}
 
 	bool TextureTest::OnMousePressed(MouseButtonPressedEvent& e)
@@ -143,13 +142,10 @@ namespace Test
 		{
 			case ButtonLeft:
 			{
-
 			}break;
 
 			case ButtonRight:
 			{
-				glfwSetInputMode(TestMenu::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-				glfwGetCursorPos(TestMenu::GetWindow(), &m_camera.lastX, &m_camera.lastY);
 			}break;
 
 			default:
@@ -164,6 +160,9 @@ namespace Test
 	}
 	bool TextureTest::OnMousMove(MouseMoveEvent& e)
 	{
+		if (!m_camera.enable)
+			return false;
+
 		if (m_camera.firstMouse)
 		{
 			m_camera.lastX = e.m_xPos;
@@ -171,29 +170,20 @@ namespace Test
 			m_camera.firstMouse = false;
 		}
 
-		float xoffset = float(m_camera.lastX - e.m_xPos);
-		float yoffset = float(e.m_yPos - m_camera.lastY);
+		float xoffset = float(e.m_xPos - m_camera.lastX);
+		float yoffset = float(m_camera.lastY - e.m_yPos);
 		m_camera.lastX = e.m_xPos;
 		m_camera.lastY = e.m_yPos;
 
-		float sensitivity = 0.05f;
-		xoffset *= sensitivity;
-		yoffset *= sensitivity;
-
-		m_camera.yaw += xoffset;
-		m_camera.pitch += yoffset;
+		m_camera.yaw += xoffset * m_camera.sensitivity;
+		m_camera.pitch += yoffset * m_camera.sensitivity;
 
 		if (m_camera.pitch > 89.0f)
 			m_camera.pitch = 89.0f;
 		if (m_camera.pitch < -89.0f)
 			m_camera.pitch = -89.0f;
 
-		glm::vec3 direction;
-		direction.x = cos(glm::radians(m_camera.yaw)) * cos(glm::radians(m_camera.pitch));
-		direction.y = sin(glm::radians(m_camera.pitch));
-		direction.z = sin(glm::radians(m_camera.yaw)) * cos(glm::radians(m_camera.pitch));
-		m_camera.cameraFront = glm::normalize(direction);
-
+		m_camera.UpdataCamera();
 		return false;
 	}
 	bool TextureTest::OnMousScroll(MouseScrolledEvent& e)
@@ -204,6 +194,69 @@ namespace Test
 			m_camera.fov = 1.0f;
 		else if (m_camera.fov > 45.0f)
 			m_camera.fov = 45.0f;
+
+		return false;
+	}
+	bool TextureTest::OnKeyPressed(KeyPressedEvent& e)
+	{
+		switch (e.GetKeyCode())
+		{
+			case EnKeyCode::W:
+			{
+				m_camera.cameraPos += m_camera.cameraFront * m_camera.speed;
+			}break;
+
+			case EnKeyCode::A:
+			{
+				m_camera.cameraPos -= m_camera.cameraRight * m_camera.speed;
+			}break;
+
+			case EnKeyCode::S:
+			{
+				m_camera.cameraPos -= m_camera.cameraFront * m_camera.speed;
+			}break;
+
+			case EnKeyCode::D:
+			{
+				m_camera.cameraPos += m_camera.cameraRight * m_camera.speed;
+			}break;
+
+			case EnKeyCode::Q:
+			{
+				m_camera.cameraPos += m_camera.worldUp * m_camera.speed;
+			}break;
+
+			case EnKeyCode::E:
+			{
+				m_camera.cameraPos -= m_camera.worldUp * m_camera.speed;
+			}break;
+
+			case EnKeyCode::V:
+			{
+				static bool b = true;
+				if (b)
+				{
+					glfwSetInputMode(TestMenu::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+					glfwGetCursorPos(TestMenu::GetWindow(), &m_camera.lastX, &m_camera.lastY);
+					m_camera.enable = false;
+					m_camera.firstMouse = true;
+				}
+				else
+				{
+					glfwSetCursorPos(TestMenu::GetWindow(), WIDTH / 2.0, HIGTH / 2.0);
+					glfwSetInputMode(TestMenu::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+					m_camera.enable = true;
+				}
+				b = !b;
+			}break;
+
+			case EnKeyCode::LeftShift:
+			{
+				m_camera.speed += 0.05f;
+			}break;
+
+			default: break;
+		}
 
 		return false;
 	}
