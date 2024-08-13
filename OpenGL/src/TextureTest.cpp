@@ -115,6 +115,35 @@ namespace Test
 		m_shader->SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
 		// DrawCall
 		renderer.Draw(*m_VAO, *m_IBO_line, GL_LINES, *m_shader);
+
+
+		for (int i = 0; i < 10; i++)
+		{
+			if (i == 5) continue;
+			float rad = 36 * (i);
+			float x = sin(glm::radians(rad)) * 4.0f;
+			float z = cos(glm::radians(rad)) * 4.0f + 4.0f;
+
+			glm::mat4 modelMatrix1 = glm::translate(glm::mat4(1.0f), glm::vec3(x, 0.0f, z)) 
+				* glm::rotate(glm::mat4(1.0f), glm::radians(rad), glm::vec3(0.0f, 1.0f, 0.0f));
+			MatrixProjViewModel = projection * view * modelMatrix1;
+			//cube
+			m_shader->Bind();
+			m_texture->Bind(1);
+
+			m_shader->SetUniform1i("u_Texture", 1);
+			m_shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+			m_shader->SetUniformMatrix4fv("matrixProjViewModel", 1, GL_FALSE, MatrixProjViewModel);
+			// DrawCall
+			renderer.Draw(*m_VAO, *m_IBO, GL_TRIANGLES, *m_shader);
+
+
+			//Line
+			m_texture->Bind();
+			m_shader->SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+			// DrawCall
+			renderer.Draw(*m_VAO, *m_IBO_line, GL_LINES, *m_shader);
+		}
 	}
 
 	void TextureTest::OnImGuiRender()
