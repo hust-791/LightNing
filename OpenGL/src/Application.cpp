@@ -181,7 +181,7 @@ int main()
 
 
         g_testMenu->RegisterTest<Test::ClearColorTest>("clear color");
-        g_testMenu->RegisterTest<Test::TextureTest>("2D Texture");
+        g_testMenu->RegisterTest<Test::TextureTest>("kun 3D");
         // Ö÷Ñ­»·
         while (!glfwWindowShouldClose(window) && Running)
         {
