@@ -15,61 +15,73 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp">
+    <ClCompile Include="src\LN\Renderer\Renderer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
+    <ClCompile Include="src\LN\Renderer\VertexBuffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\VertexBuffer.cpp">
+    <ClCompile Include="src\LN\Renderer\IndexBuffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\IndexBuffer.cpp">
+    <ClCompile Include="src\LN\Renderer\VertexArray.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\VertexArray.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Shader.cpp">
+    <ClCompile Include="src\LN\Renderer\Shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
+    <ClCompile Include="src\LN\Renderer\Texture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vendor\stb_imagecpp.cpp">
+    <ClCompile Include="Vendor\stb_imagecpp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_demo.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_draw.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_draw.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_impl_glfw.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_impl_glfw.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_tables.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_tables.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_widgets.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_widgets.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_impl_opengl3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_impl_opengl3.cpp">
+    <ClCompile Include="test\ClearColorTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\ClearColorTest.cpp">
+    <ClCompile Include="test\TestBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\TestBase.cpp">
+    <ClCompile Include="test\TextureTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextureTest.cpp">
+    <ClCompile Include="src\LN\Event\Event.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LN\Core\Window.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LN\Core\Log.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LN\Core\Applicaton.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test\begin.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,67 +89,91 @@
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Renderer.h">
+    <ClInclude Include="src\LN\Renderer\Renderer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\VertexBuffer.h">
+    <ClInclude Include="src\LN\Renderer\VertexBuffer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\IndexBuffer.h">
+    <ClInclude Include="src\LN\Renderer\IndexBuffer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\VertexArray.h">
+    <ClInclude Include="src\LN\Renderer\VertexArray.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\VertexBufferLayout.h">
+    <ClInclude Include="src\LN\Renderer\VertexBufferLayout.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Shader.h">
+    <ClInclude Include="src\LN\Renderer\Shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Texture.h">
+    <ClInclude Include="src\LN\Renderer\Texture.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\stb_image.h">
+    <ClInclude Include="Vendor\stb_image.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\imGUI\imconfig.h">
+    <ClInclude Include="Vendor\imGUI\imconfig.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\imGUI\imgui.h">
+    <ClInclude Include="Vendor\imGUI\imgui.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\imGUI\imgui_impl_glfw.h">
+    <ClInclude Include="Vendor\imGUI\imgui_impl_glfw.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\imGUI\imgui_internal.h">
+    <ClInclude Include="Vendor\imGUI\imgui_internal.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\imGUI\imstb_rectpack.h">
+    <ClInclude Include="Vendor\imGUI\imstb_rectpack.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\imGUI\imstb_textedit.h">
+    <ClInclude Include="Vendor\imGUI\imstb_textedit.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\imGUI\imstb_truetype.h">
+    <ClInclude Include="Vendor\imGUI\imstb_truetype.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\imGUI\imgui_impl_opengl3.h">
+    <ClInclude Include="Vendor\imGUI\imgui_impl_opengl3.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vendor\imGUI\imgui_impl_opengl3_loader.h">
+    <ClInclude Include="Vendor\imGUI\imgui_impl_opengl3_loader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestBase.h">
+    <ClInclude Include="test\TestBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\ClearColorTest.h">
+    <ClInclude Include="test\ClearColorTest.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\TextureTest.h">
+    <ClInclude Include="test\TextureTest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Event\Event.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\Applicaton.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\Window.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LNdefine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\Log.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\EntryPoint.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\Assert.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

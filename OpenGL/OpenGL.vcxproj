@@ -24,6 +24,7 @@
     <ProjectGuid>{f71a7028-9a72-46a8-9054-fef85e6ce170}</ProjectGuid>
     <RootNamespace>OpenGL</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>LightNing</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -110,17 +111,17 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;LN_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)depend\glfw\include;$(SolutionDir)depend\glad\include\glad;$(SolutionDir)depend\glad\include\KHR;$(SolutionDir)depend\glad\include;$(SolutionDir)depend\glm;$(SolutionDir)src\Vendor</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(solutionDir)OpenGL;$(solutionDir)depend;$(solutionDir)OpenGL\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)depend\glfw\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)depend\GLFW</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,7 +132,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)depend\glfw\include;$(SolutionDir)depend\glad\include\glad;$(SolutionDir)depend\glad\include\KHR;$(SolutionDir)depend\glad\include;$(SolutionDir)depend\glm;$(SolutionDir)src\Vendor</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(solutionDir)OpenGL;$(solutionDir)depend;$(solutionDir)OpenGL\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,72 +141,83 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\depend\glfw\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)depend\GLFW</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\ClearColorTest.cpp" />
-    <ClCompile Include="src\Event.cpp" />
-    <ClCompile Include="src\TestBase.cpp" />
-    <ClCompile Include="src\Vendor\imGUI\imgui.cpp">
+    <ClCompile Include="src\LN\Core\Applicaton.cpp" />
+    <ClCompile Include="src\LN\Core\Log.cpp" />
+    <ClCompile Include="test\begin.cpp" />
+    <ClCompile Include="test\ClearColorTest.cpp" />
+    <ClCompile Include="src\LN\Event\Event.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="test\TestBase.cpp" />
+    <ClCompile Include="Vendor\imGUI\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_draw.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_draw.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_impl_glfw.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_impl_glfw.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_impl_opengl3.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_impl_opengl3.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_tables.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_tables.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Vendor\imGUI\imgui_widgets.cpp">
+    <ClCompile Include="Vendor\imGUI\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Vendor\stb_imagecpp.cpp">
+    <ClCompile Include="Vendor\stb_imagecpp.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\IndexBuffer.cpp" />
-    <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\Renderer.cpp" />
-    <ClCompile Include="src\Shader.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="src\VertexBuffer.cpp" />
-    <ClCompile Include="src\VertexArray.cpp" />
-    <ClCompile Include="src\TextureTest.cpp" />
+    <ClCompile Include="src\LN\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\LN\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\LN\Renderer\Shader.cpp" />
+    <ClCompile Include="src\LN\Renderer\Texture.cpp" />
+    <ClCompile Include="src\LN\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\LN\Renderer\VertexArray.cpp" />
+    <ClCompile Include="test\TextureTest.cpp" />
+    <ClCompile Include="src\LN\Core\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ClearColorTest.h" />
-    <ClInclude Include="src\Event.h" />
-    <ClInclude Include="src\TestBase.h" />
-    <ClInclude Include="src\Vendor\imGUI\imconfig.h" />
-    <ClInclude Include="src\Vendor\imGUI\imgui.h" />
-    <ClInclude Include="src\Vendor\imGUI\imgui_impl_glfw.h" />
-    <ClInclude Include="src\Vendor\imGUI\imgui_impl_opengl3.h" />
-    <ClInclude Include="src\Vendor\imGUI\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="src\Vendor\imGUI\imgui_internal.h" />
-    <ClInclude Include="src\Vendor\imGUI\imstb_rectpack.h" />
-    <ClInclude Include="src\Vendor\imGUI\imstb_textedit.h" />
-    <ClInclude Include="src\Vendor\imGUI\imstb_truetype.h" />
-    <ClInclude Include="src\Vendor\stb_image.h" />
-    <ClInclude Include="src\IndexBuffer.h" />
-    <ClInclude Include="src\Renderer.h" />
-    <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\LN\Core\Assert.h" />
+    <ClInclude Include="src\LN\Core\EntryPoint.h" />
+    <ClInclude Include="src\LN\Core\Log.h" />
+    <ClInclude Include="src\LN\Core\Applicaton.h" />
+    <ClInclude Include="test\ClearColorTest.h" />
+    <ClInclude Include="src\LN\Event\Event.h" />
+    <ClInclude Include="src\LNdefine.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="test\TestBase.h" />
+    <ClInclude Include="Vendor\imGUI\imconfig.h" />
+    <ClInclude Include="Vendor\imGUI\imgui.h" />
+    <ClInclude Include="Vendor\imGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="Vendor\imGUI\imgui_impl_opengl3.h" />
+    <ClInclude Include="Vendor\imGUI\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Vendor\imGUI\imgui_internal.h" />
+    <ClInclude Include="Vendor\imGUI\imstb_rectpack.h" />
+    <ClInclude Include="Vendor\imGUI\imstb_textedit.h" />
+    <ClInclude Include="Vendor\imGUI\imstb_truetype.h" />
+    <ClInclude Include="Vendor\stb_image.h" />
+    <ClInclude Include="src\LN\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\LN\Renderer\Renderer.h" />
+    <ClInclude Include="src\LN\Renderer\Shader.h" />
     <ClInclude Include="src\stdafx.h" />
-    <ClInclude Include="src\Texture.h" />
-    <ClInclude Include="src\VertexBuffer.h" />
-    <ClInclude Include="src\VertexArray.h" />
-    <ClInclude Include="src\VertexBufferLayout.h" />
-    <ClInclude Include="src\TextureTest.h" />
+    <ClInclude Include="src\LN\Renderer\Texture.h" />
+    <ClInclude Include="src\LN\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\LN\Renderer\VertexArray.h" />
+    <ClInclude Include="src\LN\Renderer\VertexBufferLayout.h" />
+    <ClInclude Include="test\TextureTest.h" />
+    <ClInclude Include="src\LN\Core\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\texture\kun.jpeg" />
