@@ -21,6 +21,8 @@ namespace LN
 	class TestMenu :public TestBase
 	{
 	public:
+		TestMenu();
+
 		virtual ~TestMenu();
 
 		static Scope<TestMenu> Create();
@@ -35,10 +37,8 @@ namespace LN
 		template<class T>
 		void RegisterTest(const std::string& name)
 		{
-			m_Tests.push_back(std::make_pair(name, []() {return new T(GetWindow()); }));
+			m_Tests.push_back(std::make_pair(name, []() {return new T(); }));
 		}
-	private:
-		TestMenu();
 
 	private:
 		TestBase* m_currentTest;

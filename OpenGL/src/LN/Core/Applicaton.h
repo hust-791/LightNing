@@ -4,6 +4,8 @@ namespace LN
 {
 	class Window;
 	class TestMenu;
+	class WindowCloseEvent;
+	class WindowResizeEvent;
 
 	class Application
 	{
@@ -18,6 +20,8 @@ namespace LN
 		void Close();
 
 		Window& GetWindow() { return *m_Window; }
+
+		TestMenu& GetTestMenu() { return *m_TestMenu; }
 
 		static Application& Get() { return *s_Instance; }
 

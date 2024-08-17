@@ -8,6 +8,7 @@
 
 namespace LN
 {
+    Application* Application::s_Instance = nullptr;
 
     Application::Application()
     {
@@ -61,7 +62,7 @@ namespace LN
             }
 
             ImGuiIO& io = ImGui::GetIO();
-            io.DisplaySize = ImVec2((int)m_Window->GetWidth(), (int)m_Window->GetHeight());
+            io.DisplaySize = ImVec2((float)m_Window->GetWidth(), (float)m_Window->GetHeight());
             // Rendering
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

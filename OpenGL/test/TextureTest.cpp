@@ -165,10 +165,12 @@ namespace LN
 
 		return false;
 	}
+
 	bool TextureTest::OnMouseReleased(MouseButtonReleasedEvent& e)
 	{
 		return false;
 	}
+
 	bool TextureTest::OnMousMove(MouseMoveEvent& e)
 	{
 		if (!m_camera.enable)
@@ -197,6 +199,7 @@ namespace LN
 		m_camera.UpdataCamera();
 		return false;
 	}
+
 	bool TextureTest::OnMousScroll(MouseScrolledEvent& e)
 	{
 		if (m_camera.fov >= 1.0f && m_camera.fov <= 45.0f)
@@ -208,6 +211,7 @@ namespace LN
 
 		return false;
 	}
+
 	bool TextureTest::OnKeyPressed(KeyPressedEvent& e)
 	{
 		switch (e.GetKeyCode())
