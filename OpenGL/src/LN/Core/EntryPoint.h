@@ -38,18 +38,11 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cerr << "Failed to initialize GLAD." << std::endl;
-        return -1;
-    }
-
     GLCall(glEnable(GL_BLEND));
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
     app.GetTestMenu().RegisterTest<LN::ClearColorTest>("clear color");
     app.GetTestMenu().RegisterTest<LN::TextureTest>("kun 3D");
-
 
 	app.Run();
 }
