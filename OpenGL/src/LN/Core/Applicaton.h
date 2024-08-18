@@ -2,6 +2,7 @@
 
 namespace LN
 {
+	class Event;
 	class Window;
 	class TestMenu;
 	class WindowCloseEvent;

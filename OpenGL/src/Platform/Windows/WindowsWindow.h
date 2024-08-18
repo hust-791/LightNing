@@ -3,6 +3,7 @@
 
 namespace LN
 {
+	class GraphicsContext;
 
 	class WindowsWindow :public Window
 	{
@@ -28,7 +29,7 @@ namespace LN
 
 	private:
 		GLFWwindow* m_Window;
-
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{

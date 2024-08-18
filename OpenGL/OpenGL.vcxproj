@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="src\LN\Core\Applicaton.cpp" />
     <ClCompile Include="src\LN\Core\Log.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContetx.cpp" />
     <ClCompile Include="test\begin.cpp" />
     <ClCompile Include="test\ClearColorTest.cpp" />
     <ClCompile Include="src\LN\Event\Event.cpp" />
@@ -193,6 +194,8 @@
     <ClInclude Include="src\LN\Core\EntryPoint.h" />
     <ClInclude Include="src\LN\Core\Log.h" />
     <ClInclude Include="src\LN\Core\Applicaton.h" />
+    <ClInclude Include="src\LN\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="test\ClearColorTest.h" />
     <ClInclude Include="src\LN\Event\Event.h" />
     <ClInclude Include="src\LNdefine.h" />

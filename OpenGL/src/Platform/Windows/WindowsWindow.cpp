@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "LN/Core/Window.h"
 #include "LN/Event/Event.h"
+#include "LN/Renderer/GraphicsContext.h"
+#include "Platform/OpenGL/OpenGLContext.h"
+
 #include "WindowsWindow.h"
 
 
@@ -25,8 +28,8 @@ namespace LN
 
     void WindowsWindow::OnUpdata()
     {
-        glfwSwapBuffers(m_Window);
         glfwPollEvents();
+        m_Context->SwapBuffer();
     }
 
     void WindowsWindow::SetVSync(bool enable)
@@ -68,7 +71,8 @@ namespace LN
             glfwTerminate();
         }
 
-        glfwMakeContextCurrent(m_Window);
+        m_Context = new OpenGLContext(m_Window);
+        m_Context->Init();
 
         glfwSetWindowUserPointer(m_Window, &m_data);
 
