@@ -1,4 +1,7 @@
 #include "stdafx.h"
+#include "LN/Renderer/VertexBufferLayout.h"
+#include "LN/Renderer/Buffer.h"
+#include "LN/Renderer/VertexArray.h"
 #include "LN/Core/Applicaton.h"
 #include "TextureTest.h"
 
@@ -59,7 +62,7 @@ namespace LN
 		VertexBufferLayout layout;
 		layout.Push<float>(3);
 		layout.Push<float>(2);
-		m_VAO->AddBuffer(*m_VBO, layout);
+		m_VAO->AddVertexBuffer(*m_VBO, layout);
 
 		m_IBO = std::make_unique<IndexBuffer>(indicesCube, 36);
 		m_IBO_line = std::make_unique<IndexBuffer>(indicesLine, 24);

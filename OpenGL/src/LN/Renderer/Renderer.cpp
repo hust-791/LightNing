@@ -1,29 +1,23 @@
 #include "stdafx.h"
+#include "LN/Renderer/VertexArray.h"
+#include "RendererAPI.h"
+#include "Renderer.h"
 
-void GLClearError()
-{
-	while (glGetError() != GL_NO_ERROR);
-}
+namespace LN {
 
-bool GLLogCall(const char* func, const char* fileName, const int line)
-{
-	while (GLenum error = glGetError())
+	void Renderer::BeginSence()
 	{
-		std::cout << "[OpenGL Error] (" << error << ") " << func << " " << fileName << " " << line << std::endl;
-		return false;
 	}
-	return true;
+
+	void Renderer::EndSence()
+	{
+	}
+
+	void Renderer::Submit(const Ref<VertexArray>& vertxeArray)
+	{
+		vertxeArray->Bind();
+
+	}
+
 }
 
-void Renderer::Draw(VertexArray& va, IndexBuffer& ib, unsigned int drawModel, Shader& shader)
-{
-	shader.Bind();
-	va.Bind();
-	ib.Bind();
-	GLCall(glDrawElements(drawModel, ib.GetCount(), GL_UNSIGNED_INT, NULL));
-}
-
-void Renderer::Clear()
-{
-	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-}

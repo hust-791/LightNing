@@ -27,10 +27,8 @@
 #include "LN/Core/Assert.h"
 #include "LN/Core/Window.h"
 
-#include "LN/Renderer/VertexBuffer.h"
-#include "LN/Renderer/IndexBuffer.h"
-#include "LN/Renderer/VertexBufferLayout.h"
+#include "LN/Renderer/Buffer.h"
 #include "LN/Renderer/VertexArray.h"
+
 #include "LN/Renderer/shader.h"
-#include "LN/Renderer/Renderer.h"
 #include "LN/Renderer/Texture.h"

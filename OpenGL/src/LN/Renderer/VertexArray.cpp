@@ -1,38 +1,20 @@
 #include "stdafx.h"
+#include "RendererAPI.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
+#include "VertexArray.h"
 
-VertexArray::VertexArray():m_RendererID(0)
-{
-	GLCall(glGenVertexArrays(1, &m_RendererID));
-}
 
-VertexArray::~VertexArray()
-{
-	GLCall(glDeleteVertexArrays(1, &m_RendererID));
-}
+namespace LN {
 
-void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
-{
-	Bind();
-	vb.Bind();
-	const auto& elements = layout.getElement();
-	unsigned int offset = 0;
-	for (unsigned int i = 0; i < elements.size(); i++)
+	VertexArray* VertexArray::Create()
 	{
-		const auto& element = elements[i];
+		switch (RendererAPI::GetAPI())
+		{
+		case RendererAPI::API::en_None: LN_CORE_ASSERT(false, "VertexArray: RendererAPI invalid !"); return nullptr;
+		case RendererAPI::API::en_OpenGL: return new OpenGLVertexArray;
+		}
 
-		GLCall(glEnableVertexAttribArray(i));
-		GLCall(glVertexAttribPointer(i, element.count, element.type, 
-			element.normalized, layout.getStride(), (const void*)offset));
-		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
+		LN_CORE_ASSERT(false, "Unknown RendererAPI !")
+		return nullptr;
 	}
-}
-
-void VertexArray::Bind() const
-{
-	GLCall(glBindVertexArray(m_RendererID));
-}
-
-void VertexArray::UnBind() const
-{
-	GLCall(glBindVertexArray(0));
 }

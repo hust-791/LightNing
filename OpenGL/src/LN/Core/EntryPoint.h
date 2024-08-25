@@ -2,8 +2,8 @@
 
 #include "Log.h"
 #include "Applicaton.h"
-#include <test/ClearColorTest.h>
-#include <test/TextureTest.h>
+//#include <test/ClearColorTest.h>
+//#include <test/TextureTest.h>
 
 int main(int argc, char** argv)
 {
@@ -32,8 +32,8 @@ int main(int argc, char** argv)
     ImGui_ImplOpenGL3_Init("#version 410");
 
 
-    app.GetTestMenu().RegisterTest<LN::ClearColorTest>("clear color");
-    app.GetTestMenu().RegisterTest<LN::TextureTest>("kun 3D");
+    //app.GetTestMenu().RegisterTest<LN::ClearColorTest>("clear color");
+    //app.GetTestMenu().RegisterTest<LN::TextureTest>("kun 3D");
 
 	app.Run();
 }

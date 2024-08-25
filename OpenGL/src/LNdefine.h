@@ -20,3 +20,14 @@ constexpr Ref<T> CreateRef(Args&& ... args)
 #define LN_DEBUGBREAK() __debugbreak()
 #define LN_EXPAND_MACRO(x) x
 #define LN_STRINGIFY_MACRO(x) #x
+
+
+#define ASSERT(x) if(!(x))__debugbreak();
+#define GLCall(x) GLClearError();\
+		x;\
+		ASSERT(GLLogCall(#x,__FILE__,__LINE__))
+
+
+void GLClearError();
+bool GLLogCall(const char* func, const char* fileName, const int line);
+
