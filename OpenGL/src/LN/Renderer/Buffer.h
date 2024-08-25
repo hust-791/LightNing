@@ -20,8 +20,8 @@ namespace LN
 	public:
 		VertexBufferLayout() :m_Stride(0) {}
 
-		inline const std::vector<VertexBufferElement> getElement() const;
-		inline const unsigned int getStride() const;
+		inline const std::vector<VertexBufferElement>& getElement() const { return m_Elements; };
+		inline const unsigned int getStride() const { return m_Stride; }
 
 		template<typename T>
 		void Push(unsigned int count)

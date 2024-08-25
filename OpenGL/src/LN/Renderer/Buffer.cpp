@@ -42,10 +42,6 @@ namespace LN
 		return 0;
 	}
 
-	const std::vector<VertexBufferElement> VertexBufferLayout::getElement() const { return m_Elements; }
-
-	const unsigned int VertexBufferLayout::getStride() const { return m_Stride; }
-
 	template<>
 	void VertexBufferLayout::Push<float>(unsigned int count)
 	{
