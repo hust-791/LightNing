@@ -16,10 +16,6 @@ namespace LN
 
 		inline static RendererAPI::API GetAPI(){ return RendererAPI::GetAPI(); }
 
-
-		void Draw(VertexArray& va, IndexBuffer& ib, unsigned int drawModel, Shader& shader);
-		void Clear();
-
 	};
 
 }
