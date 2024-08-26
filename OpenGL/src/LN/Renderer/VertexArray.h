@@ -1,20 +1,28 @@
 #pragma once
-class VertexBuffer;
-class VertexBufferLayout;
 
 
-class VertexArray
-{
-private:
-	unsigned int m_RendererID;
+namespace LN {
 
-public:
-	VertexArray();
-	~VertexArray();
+	class IndexBuffer;
+	class VertexBuffer;
+	class VertexBufferLayout;
 
-	void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
+	class VertexArray
+	{
+	public:
+		virtual ~VertexArray() {}
 
-	void Bind() const;
-	void UnBind() const;
-};
+		virtual void Bind()const = 0;
+		virtual void UnBind()const = 0;
+
+		virtual void AddVertexBuffer(const Ref<VertexBuffer>& vb) = 0;
+		virtual void SetIndexBuffer(const Ref<IndexBuffer>& ib) = 0;
+
+		virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffer()const = 0;
+		virtual const Ref<IndexBuffer>& GetIndexBuffer()const = 0;
+
+		static VertexArray* Create();
+	};
+
+}
 

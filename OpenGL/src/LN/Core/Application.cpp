@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "LN/Core/Window.h"
 #include "LN/Event/Event.h"
+#include "LN/Renderer/RendererCommand.h"
 #include "LN/Core/Layer.h"
 #include "test/TestBase.h"
 #include "Application.h"
-
 
 namespace LN
 {
@@ -57,17 +57,15 @@ namespace LN
 
     void Application::Run()
     {
-        Renderer renderer;
 
         while (m_Running)
         {
-            GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));
-            renderer.Clear();
+            RendererCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 0.0f });
+            RendererCommand::Clear();
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-
 
             if (m_TestMenu->GetCurrentTest())
             {

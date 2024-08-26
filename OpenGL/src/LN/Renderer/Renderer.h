@@ -3,14 +3,23 @@ class VertexArray;
 class IndexBuffer;
 class Shader;
 
-namespace LN {
+namespace LN
+{
 
 	class Renderer
 	{
 	public:
+		static void BeginSence();
+		static void EndSence();
+
+		static void Submit(const Ref<VertexArray>& vertxeArray);
+
+		inline static RendererAPI::API GetAPI(){ return RendererAPI::GetAPI(); }
+
+
 		void Draw(VertexArray& va, IndexBuffer& ib, unsigned int drawModel, Shader& shader);
 		void Clear();
+
 	};
 
 }
-

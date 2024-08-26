@@ -1,19 +1,22 @@
 #include "stdafx.h"
-
+#include "LN/Renderer/VertexArray.h"
+#include "RendererAPI.h"
+#include "Renderer.h"
 
 namespace LN {
 
-	void Renderer::Draw(VertexArray& va, IndexBuffer& ib, unsigned int drawModel, Shader& shader)
+	void Renderer::BeginSence()
 	{
-		shader.Bind();
-		va.Bind();
-		ib.Bind();
-		GLCall(glDrawElements(drawModel, ib.GetCount(), GL_UNSIGNED_INT, NULL));
 	}
 
-	void Renderer::Clear()
+	void Renderer::EndSence()
 	{
-		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	}
+
+	void Renderer::Submit(const Ref<VertexArray>& vertxeArray)
+	{
+		vertxeArray->Bind();
+
 	}
 
 }

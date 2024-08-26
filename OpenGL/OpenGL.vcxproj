@@ -148,15 +148,18 @@
   <ItemGroup>
     <ClCompile Include="src\LN\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\LNdefine.cpp" />
+    <ClCompile Include="src\LN\Renderer\RendererCommand.cpp" />
     <ClCompile Include="src\LN\Core\LayerStack.cpp" />
     <ClCompile Include="src\LN\Core\Application.cpp" />
     <ClCompile Include="src\LN\Core\Layer.cpp" />
     <ClCompile Include="src\LN\Core\Log.cpp" />
     <ClCompile Include="src\LN\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContetx.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="test\begin.cpp" />
-    <ClCompile Include="test\ClearColorTest.cpp" />
     <ClCompile Include="src\LN\Event\Event.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="test\TestBase.cpp" />
@@ -184,20 +187,19 @@
     <ClCompile Include="src\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\LN\Renderer\IndexBuffer.cpp" />
     <ClCompile Include="src\LN\Renderer\Renderer.cpp" />
     <ClCompile Include="src\LN\Renderer\Shader.cpp" />
     <ClCompile Include="src\LN\Renderer\Texture.cpp" />
-    <ClCompile Include="src\LN\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="src\LN\Renderer\VertexArray.cpp" />
-    <ClCompile Include="test\TextureTest.cpp" />
     <ClCompile Include="src\LN\Core\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\LN\Renderer\Buffer.h" />
     <ClInclude Include="src\LN\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\LN\Renderer\RendererCommand.h" />
     <ClInclude Include="src\LN\Core\LayerStack.h" />
     <ClInclude Include="src\LN\Core\Assert.h" />
     <ClInclude Include="src\LN\Core\EntryPoint.h" />
@@ -206,10 +208,11 @@
     <ClInclude Include="src\LN\Core\Layer.h" />
     <ClInclude Include="src\LN\Core\Log.h" />
     <ClInclude Include="src\LN\Core\Application.h" />
-    <ClInclude Include="src\LN\Renderer\Buffer.h" />
     <ClInclude Include="src\LN\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="test\ClearColorTest.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\LN\Event\Event.h" />
     <ClInclude Include="src\LNdefine.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -224,15 +227,11 @@
     <ClInclude Include="Vendor\imGUI\imstb_textedit.h" />
     <ClInclude Include="Vendor\imGUI\imstb_truetype.h" />
     <ClInclude Include="Vendor\stb_image.h" />
-    <ClInclude Include="src\LN\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\LN\Renderer\Renderer.h" />
     <ClInclude Include="src\LN\Renderer\Shader.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\LN\Renderer\Texture.h" />
-    <ClInclude Include="src\LN\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\LN\Renderer\VertexArray.h" />
-    <ClInclude Include="src\LN\Renderer\VertexBufferLayout.h" />
-    <ClInclude Include="test\TextureTest.h" />
     <ClInclude Include="src\LN\Core\Window.h" />
   </ItemGroup>
   <ItemGroup>
