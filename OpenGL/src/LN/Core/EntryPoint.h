@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Log.h"
-#include "Applicaton.h"
+#include "Application.h"
 #include <test/ClearColorTest.h>
 #include <test/TextureTest.h>
 

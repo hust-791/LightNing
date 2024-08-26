@@ -1248,7 +1248,7 @@ template <typename T> auto to_decimal(T x) noexcept -> decimal_fp<T> {
   auto br = bit_cast<carrier_uint>(x);
 
   // Extract significand bits and exponent bits.
-  const carrier_uint significand_mask =
+  constexpr const carrier_uint significand_mask =
       (static_cast<carrier_uint>(1) << num_significand_bits<T>()) - 1;
   carrier_uint significand = (br & significand_mask);
   int exponent =

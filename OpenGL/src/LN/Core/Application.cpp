@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "LN/Core/Window.h"
 #include "LN/Event/Event.h"
-
+#include "LN/Core/Layer.h"
 #include "test/TestBase.h"
-#include "Applicaton.h"
+#include "Application.h"
 
 
 namespace LN
@@ -17,6 +17,7 @@ namespace LN
 
         m_Window = Window::Create();
         m_Window->SetEventCallback(LN_EVENT_BIND_FUNC(Application::OnEvent));
+        m_Window->SetVSync(true);
 
         m_TestMenu = TestMenu::Create();
     }
@@ -32,6 +33,26 @@ namespace LN
         dispatcher.Dispatch<WindowResizeEvent>(LN_EVENT_BIND_FUNC(Application::OnWindowResize));
 
         m_TestMenu->GetCurrentTest()->OnEvent(e);
+
+        for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+        {
+            if (e.Handled)
+                break;
+            (*it)->OnEvent(e);
+        }
+    }
+
+    void Application::PushLayer(Layer* layer)
+    {
+        m_LayerStack.PushLayer(layer);
+        layer->OnAttach();
+
+    }
+
+    void Application::PushOverlay(Layer* layer)
+    {
+        m_LayerStack.PushOverLayer(layer);
+        layer->OnAttach();
     }
 
     void Application::Run()

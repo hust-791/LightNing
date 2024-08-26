@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "LN/Core/Applicaton.h"
+#include "LN/Core/Application.h"
 #include "TextureTest.h"
 
 
@@ -269,6 +269,11 @@ namespace LN
 			case EnKeyCode::LeftShift:
 			{
 				m_camera.speed += 0.05f;
+			}break;
+
+			case EnKeyCode::Escape:
+			{
+				Application::Get().Close();
 			}break;
 
 			default: break;

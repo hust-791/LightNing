@@ -1,29 +1,20 @@
 #include "stdafx.h"
 
-void GLClearError()
-{
-	while (glGetError() != GL_NO_ERROR);
-}
 
-bool GLLogCall(const char* func, const char* fileName, const int line)
-{
-	while (GLenum error = glGetError())
+namespace LN {
+
+	void Renderer::Draw(VertexArray& va, IndexBuffer& ib, unsigned int drawModel, Shader& shader)
 	{
-		std::cout << "[OpenGL Error] (" << error << ") " << func << " " << fileName << " " << line << std::endl;
-		return false;
+		shader.Bind();
+		va.Bind();
+		ib.Bind();
+		GLCall(glDrawElements(drawModel, ib.GetCount(), GL_UNSIGNED_INT, NULL));
 	}
-	return true;
+
+	void Renderer::Clear()
+	{
+		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	}
+
 }
 
-void Renderer::Draw(VertexArray& va, IndexBuffer& ib, unsigned int drawModel, Shader& shader)
-{
-	shader.Bind();
-	va.Bind();
-	ib.Bind();
-	GLCall(glDrawElements(drawModel, ib.GetCount(), GL_UNSIGNED_INT, NULL));
-}
-
-void Renderer::Clear()
-{
-	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-}

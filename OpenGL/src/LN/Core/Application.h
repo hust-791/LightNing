@@ -5,6 +5,8 @@ namespace LN
 	class Event;
 	class Window;
 	class TestMenu;
+	class Layer;
+	class LayerStack;
 	class WindowCloseEvent;
 	class WindowResizeEvent;
 
@@ -15,6 +17,9 @@ namespace LN
 		virtual ~Application();
 
 		void OnEvent(Event& e);
+
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
 
 		void Run();
 
@@ -35,6 +40,7 @@ namespace LN
 
 		Scope<Window> m_Window;
 		Scope<TestMenu> m_TestMenu;
+		LayerStack m_LayerStack;
 
 		bool m_Running = true;
 	};

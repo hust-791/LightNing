@@ -8,6 +8,7 @@
 #include <vector>
 #include <functional>
 #include <memory>
+#include <unordered_map>
 
 //vendor
 #include <GLAD/glad.h>
@@ -26,6 +27,7 @@
 #include "LN/Core/Log.h"
 #include "LN/Core/Assert.h"
 #include "LN/Core/Window.h"
+#include "LN/Core/LayerStack.h"
 
 #include "LN/Renderer/VertexBuffer.h"
 #include "LN/Renderer/IndexBuffer.h"
