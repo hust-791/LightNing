@@ -3,6 +3,7 @@
 #include "LN/Event/Event.h"
 #include "LN/Renderer/RendererCommand.h"
 #include "LN/Core/Layer.h"
+#include "LN/ImGui/ImGuiLayer.h"
 #include "test/TestBase.h"
 #include "Application.h"
 
@@ -18,6 +19,9 @@ namespace LN
         m_Window = Window::Create();
         m_Window->SetEventCallback(LN_EVENT_BIND_FUNC(Application::OnEvent));
         m_Window->SetVSync(true);
+
+        m_ImGuiLayer =new ImGuiLayer();
+        PushOverlay(m_ImGuiLayer);
 
         m_TestMenu = TestMenu::Create();
     }
@@ -63,9 +67,7 @@ namespace LN
             RendererCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 0.0f });
             RendererCommand::Clear();
 
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
+            m_ImGuiLayer->Begin();
 
             if (m_TestMenu->GetCurrentTest())
             {
@@ -80,19 +82,7 @@ namespace LN
                 m_TestMenu->GetCurrentTest()->OnImGuiRender();
             }
 
-            ImGuiIO& io = ImGui::GetIO();
-            io.DisplaySize = ImVec2((float)m_Window->GetWidth(), (float)m_Window->GetHeight());
-            // Rendering
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-            {
-                GLFWwindow* backup_current_context = glfwGetCurrentContext();
-                ImGui::UpdatePlatformWindows();
-                ImGui::RenderPlatformWindowsDefault();
-                glfwMakeContextCurrent(backup_current_context);
-            }
+            m_ImGuiLayer->End();
 
             m_Window->OnUpdata();
         }

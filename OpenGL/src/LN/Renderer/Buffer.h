@@ -51,7 +51,7 @@ namespace LN
 		virtual void SetLayout(const VertexBufferLayout& layout) = 0;
 		virtual const VertexBufferLayout& GetBufferLayout() = 0;
 
-		static VertexBuffer* Create(float* vertex, size_t size);
+		static Ref<VertexBuffer> Create(float* vertex, size_t size);
 	};
 
 
@@ -65,7 +65,7 @@ namespace LN
 
 		virtual int GetCount()const = 0;
 
-		static IndexBuffer* Create(size_t* index, size_t size);
+		static Ref<IndexBuffer> Create(size_t* index, size_t size);
 	};
 
 }

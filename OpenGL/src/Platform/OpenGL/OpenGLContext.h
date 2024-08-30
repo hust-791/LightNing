@@ -1,10 +1,10 @@
 #pragma once
 
 
+struct GLFWwindow;
+
 namespace LN
 {
-	class GraphicsContext;
-
 	class OpenGLContext :public GraphicsContext
 	{
 	public:

@@ -111,7 +111,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;LN_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LN_DEBUG;GLM_ENABLE_EXPERIMENTAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -131,7 +131,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;GLM_ENABLE_EXPERIMENTAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(solutionDir)OpenGL;$(solutionDir)depend;$(solutionDir)OpenGL\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -146,6 +146,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\LN\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\LN\Renderer\Camera.cpp" />
+    <ClCompile Include="src\LN\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\LN\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\LNdefine.cpp" />
     <ClCompile Include="src\LN\Renderer\RendererCommand.cpp" />
@@ -197,7 +200,10 @@
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\LN\Core\PlatformDetection.h" />
+    <ClInclude Include="src\LN\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\LN\Renderer\Buffer.h" />
+    <ClInclude Include="src\LN\Renderer\Camera.h" />
     <ClInclude Include="src\LN\Renderer\RendererAPI.h" />
     <ClInclude Include="src\LN\Renderer\RendererCommand.h" />
     <ClInclude Include="src\LN\Core\LayerStack.h" />

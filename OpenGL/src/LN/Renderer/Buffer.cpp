@@ -6,24 +6,24 @@
 
 namespace LN
 {
-	VertexBuffer* VertexBuffer::Create(float* vertex, size_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertex, size_t size)
 	{
 		switch (RendererAPI::GetAPI())
 		{
 			case RendererAPI::API::en_None: LN_CORE_ASSERT(false, "VertexBuffer: RendererAPI invalid !"); return nullptr;
-			case RendererAPI::API::en_OpenGL: return new OpenGLVertexBuffer(vertex, size);
+			case RendererAPI::API::en_OpenGL: return CreateRef<OpenGLVertexBuffer>(vertex, size);
 		}
 
 		LN_CORE_ASSERT(false, "Unknown RendererAPI !")
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create(size_t* index, size_t size)
+	Ref<IndexBuffer> IndexBuffer::Create(size_t* index, size_t size)
 	{
 		switch (RendererAPI::GetAPI())
 		{
 		case RendererAPI::API::en_None: LN_CORE_ASSERT(false, "IndexBuffer: RendererAPI invalid !"); return nullptr;
-		case RendererAPI::API::en_OpenGL: return new OpenGLIndexBuffer(index, size);
+		case RendererAPI::API::en_OpenGL: return CreateRef<OpenGLIndexBuffer>(index, size);
 		}
 
 		LN_CORE_ASSERT(false, "Unknown RendererAPI !")

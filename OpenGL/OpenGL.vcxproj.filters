@@ -63,9 +63,6 @@
     <ClCompile Include="src\LN\Core\Log.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\LN\Core\Applicaton.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="test\begin.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -94,6 +91,27 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\LNdefine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LN\Core\LayerStack.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LN\Core\Application.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LN\Core\Layer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LN\Renderer\GraphicsContext.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LN\ImGui\ImGuiLayer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LN\Renderer\Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,9 +167,6 @@
     <ClInclude Include="src\LN\Event\Event.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\LN\Core\Applicaton.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\LN\Core\Window.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -195,6 +210,30 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="test\TestBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\LayerStack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\Input.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\KeyCodes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\Layer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\Application.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Core\PlatformDetection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\ImGui\ImGuiLayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LN\Renderer\Camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

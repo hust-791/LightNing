@@ -6,6 +6,7 @@ namespace LN
 	class Window;
 	class TestMenu;
 	class Layer;
+	class ImGuiLayer;
 	class LayerStack;
 	class WindowCloseEvent;
 	class WindowResizeEvent;
@@ -39,6 +40,9 @@ namespace LN
 		static Application* s_Instance;
 
 		Scope<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
+
+
 		Scope<TestMenu> m_TestMenu;
 		LayerStack m_LayerStack;
 

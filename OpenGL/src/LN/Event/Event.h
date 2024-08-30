@@ -107,10 +107,14 @@ namespace LN
 	public:
 		MouseMoveEvent(double xpos, double ypos) :m_xPos(xpos), m_yPos(ypos) {}
 
+		float GetX() const { return (float)m_xPos; }
+		float GetY() const { return (float)m_yPos; }
+
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 			EVENT_CLASS_TYPE(MouseMoved)
 
+	private:
 			double m_xPos, m_yPos;
 	};
 
@@ -119,10 +123,13 @@ namespace LN
 	public:
 		MouseScrolledEvent(double xoffset, double yoffset) :m_xOffect(xoffset), m_yOffect(yoffset) {}
 
+		float GetXOffset() const { return (float)m_xOffect; }
+		float GetYOffset() const { return (float)m_yOffect; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
 			EVENT_CLASS_TYPE(MouseScrolled)
 
+	private:
 			double m_xOffect, m_yOffect;
 	};
 

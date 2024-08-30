@@ -16,16 +16,20 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtc/matrix_transform.hpp>
 #include <GLM/gtc/type_ptr.hpp>
+#include <GLM/gtx/quaternion.hpp>
+
 #include "Vendor/imGUI/imgui_impl_glfw.h"
 #include "Vendor/imGUI/imgui_impl_opengl3.h"
 
+//platform
+#include "LN/Core/PlatformDetection.h"
 
 //define
 #include "LNdefine.h"
-
-//src
 #include "LN/Core/Log.h"
 #include "LN/Core/Assert.h"
+
+//src
 #include "LN/Core/Window.h"
 #include "LN/Core/LayerStack.h"
 

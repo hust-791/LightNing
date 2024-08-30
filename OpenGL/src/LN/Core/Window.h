@@ -8,7 +8,7 @@ namespace LN
 		uint32_t Width;
 		uint32_t Height;
 
-		WindowSetting(const std::string& title = "LN Engine", uint32_t width = 1600, uint32_t height = 900) : Title(title), Width(width), Height(height) {}
+		WindowSetting(const std::string& title = "LN Engine", uint32_t width = 800, uint32_t height = 450) : Title(title), Width(width), Height(height) {}
 	};
 
 	class Event;
