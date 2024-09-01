@@ -41,23 +41,27 @@ namespace LN {
 
         void SetViewportSize(float width, float height);
     protected:
+        glm::vec3 CalculatePosition() const;
+
         void UpdateProjection();
         void UpdateView();
 
-        float ZoomSpeed() const;
         void MouseZoom(float delta);
+
+        float ZoomSpeed() const;
+        std::pair<float, float> PanSpeed() const;
+        float RotationSpeed() const;
 
         bool OnMouseScroll(MouseScrolledEvent& e);
         bool OnWindowResized(WindowResizeEvent& e);
 
-
-        glm::vec3 CalculatePosition() const;
-
-
     protected:
         float m_FOV = 45.0f, m_AspectRatio = 1.778f, m_NearClip = 0.1f, m_FarClip = 1000.0f;
 
+        CameraProjModel m_ProjModel;
         glm::mat4 m_ViewMatrix;
+        glm::mat4 m_Projection = glm::mat4(1.0f);
+
         glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
         glm::vec3 m_FocalPoint = { 0.0f, 0.0f, 0.0f };
 
@@ -65,11 +69,7 @@ namespace LN {
         float m_Pitch = 0.0f, m_Yaw = 0.0f;
 
         float m_ZoomLevel = 1.0f;
-
         float m_ViewportWidth = 1280, m_ViewportHeight = 720;
-
-        glm::mat4 m_Projection = glm::mat4(1.0f);
-        CameraProjModel m_ProjModel;
     };
 
 
@@ -87,9 +87,6 @@ namespace LN {
         void MousePan(const glm::vec2& delta);
         void MouseRotate(const glm::vec2& delta);
 
-        std::pair<float, float> PanSpeed() const;
-        float RotationSpeed() const;
-
     private:
         glm::vec2 m_InitialMousePosition = { 0.0f, 0.0f };
     };
@@ -105,8 +102,6 @@ namespace LN {
         void OnEvent(Event& e) override;
 
     private:
-        bool OnMouseScroll(MouseScrolledEvent& e);
-        bool OnWindowResized(WindowResizeEvent& e);
         bool OnMousePressed(MouseButtonPressedEvent& e);
         bool OnMouseReleased(MouseButtonReleasedEvent& e);
         bool OnMousMove(MouseMoveEvent& e);
@@ -114,5 +109,6 @@ namespace LN {
 
     private:
         glm::vec2 m_LastMousePosition = { 0.0f, 0.0f };
+        bool m_IsFirstEnter = true;
     };
 }

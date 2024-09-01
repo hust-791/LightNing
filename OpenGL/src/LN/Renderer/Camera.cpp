@@ -94,6 +94,22 @@ namespace LN {
 		return speed;
 	}
 
+	std::pair<float, float> Camera::PanSpeed() const
+	{
+		float x = std::min(m_ViewportWidth / 1000.0f, 2.4f); // max = 2.4f
+		float xFactor = 0.0366f * (x * x) - 0.1778f * x + 0.3021f;
+
+		float y = std::min(m_ViewportHeight / 1000.0f, 2.4f); // max = 2.4f
+		float yFactor = 0.0366f * (y * y) - 0.1778f * y + 0.3021f;
+
+		return { xFactor, yFactor };
+	}
+
+	float Camera::RotationSpeed() const
+	{
+		return 0.8f;
+	}
+
 	void Camera::OnUpdate(float ts)
 	{
 
@@ -125,6 +141,15 @@ namespace LN {
 
 
 
+
+	//---------------|--------------|----------------------
+	//---------------| EditorCamera |----------------------
+	//---------------|--------------|----------------------
+
+	EditorCamera::EditorCamera(float fov, float aspectRatio, float nearClip, float farClip, CameraProjModel model)
+		:Camera(fov, aspectRatio, nearClip, farClip, model)
+	{
+	}
 
 	void EditorCamera::OnUpdate(float ts)
 	{
@@ -166,24 +191,104 @@ namespace LN {
 		m_Pitch += delta.y * RotationSpeed();
 	}
 
-	std::pair<float, float> EditorCamera::PanSpeed() const
+
+
+	//---------------|------------|----------------------
+	//---------------| ViewCamera |----------------------
+	//---------------|------------|----------------------
+
+
+	void ViewCamera::OnUpdate(float ts)
 	{
-		float x = std::min(m_ViewportWidth / 1000.0f, 2.4f); // max = 2.4f
-		float xFactor = 0.0366f * (x * x) - 0.1778f * x + 0.3021f;
-
-		float y = std::min(m_ViewportHeight / 1000.0f, 2.4f); // max = 2.4f
-		float yFactor = 0.0366f * (y * y) - 0.1778f * y + 0.3021f;
-
-		return { xFactor, yFactor };
+		Camera::OnUpdate(ts);
 	}
 
-	float EditorCamera::RotationSpeed() const
+	void ViewCamera::OnEvent(Event& e)
 	{
-		return 0.8f;
+		Camera::OnEvent(e);
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<MouseButtonPressedEvent>(LN_EVENT_BIND_FUNC(ViewCamera::OnMousePressed));
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(LN_EVENT_BIND_FUNC(ViewCamera::OnMouseReleased));
+		dispatcher.Dispatch<MouseMoveEvent>(LN_EVENT_BIND_FUNC(ViewCamera::OnMousMove));
+		dispatcher.Dispatch<KeyPressedEvent>(LN_EVENT_BIND_FUNC(ViewCamera::OnKeyPressed));
 	}
 
+	bool ViewCamera::OnMousePressed(MouseButtonPressedEvent& e)
+	{
+		switch (e.GetMouseButton())
+		{
+		case Mouse::ButtonLeft:
+		{
+		}break;
+
+		case Mouse::ButtonRight:
+		{
+		}break;
+
+		default:
+			break;
+		}
+
+		return false;
+	}
+
+	bool ViewCamera::OnMouseReleased(MouseButtonReleasedEvent& e)
+	{
+		return false;
+	}
+
+	bool ViewCamera::OnMousMove(MouseMoveEvent& e)
+	{
+		if (m_IsFirstEnter)
+		{
+			m_LastMousePosition = { e.GetX() ,e.GetY() };
+			m_IsFirstEnter = false;
+		}
+
+		const glm::vec2& mouse{ e.GetX() ,e.GetY() };
+		glm::vec2 delta = (mouse - m_LastMousePosition) * 0.003f;
+		m_LastMousePosition = mouse;
+
+		float yawSign = GetUpDirection().y < 0 ? -1.0f : 1.0f;
+		m_Yaw += yawSign * delta.x * RotationSpeed();
+		m_Pitch += delta.y * RotationSpeed();
+
+		return false;
+	}
+
+	bool ViewCamera::OnKeyPressed(KeyPressedEvent& e)
+	{
+		switch (e.GetKeyCode())
+		{
+			case Key::W: 
+			{		
+				auto [xSpeed, ySpeed] = PanSpeed();
+				m_FocalPoint += -GetUpDirection() * xSpeed * m_Distance;
+			}break;
+
+			case Key::A: 
+			{
+				auto [xSpeed, ySpeed] = PanSpeed();
+				m_FocalPoint += GetRightDirection() * ySpeed * m_Distance;
+			}break;
+
+			case Key::S: 
+			{
+				auto [xSpeed, ySpeed] = PanSpeed();
+				m_FocalPoint += GetUpDirection() * ySpeed * m_Distance;
+			}break;
+
+			case Key::D: 
+			{
+				auto [xSpeed, ySpeed] = PanSpeed();
+				m_FocalPoint += GetRightDirection() * xSpeed * m_Distance;
+			}break;
 
 
-
+			default:	 
+				break;
+		}
+		return false;
+	}
 
 }
