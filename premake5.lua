@@ -51,7 +51,6 @@ project "LightNing"
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl",
 		
-		"%{prj.name}/test/begin.cpp",
 		"%{prj.name}/test/TestBase.h",
 		"%{prj.name}/test/TestBase.cpp",
 	}

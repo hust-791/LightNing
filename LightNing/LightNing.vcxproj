@@ -621,7 +621,6 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="test\TestBase.cpp" />
-    <ClCompile Include="test\begin.cpp" />
     <ClCompile Include="vendor\stb_image\stb_imagecpp.cpp" />
   </ItemGroup>
   <ItemGroup>

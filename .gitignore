@@ -3,6 +3,22 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Binaries
+**/bin/
+bin-int/
+Intermediates/
+
+# Hazel files
+*.log
+
+# Visual Studio files and folder
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+**.csproj
+
 # User-specific files
 *.rsuser
 *.suo
@@ -361,3 +377,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+

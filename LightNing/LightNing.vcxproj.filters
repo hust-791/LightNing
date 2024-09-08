@@ -1478,9 +1478,6 @@
     <ClCompile Include="test\TestBase.cpp">
       <Filter>test</Filter>
     </ClCompile>
-    <ClCompile Include="test\begin.cpp">
-      <Filter>test</Filter>
-    </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_imagecpp.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
