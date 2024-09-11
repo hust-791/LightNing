@@ -1,7 +1,10 @@
 
 [submodule "LightNing/vendor/GLFW"]
 	path = LightNing/vendor/GLFW
-	url = https://gitee.com/hust-791/GLFW.git
+	url = https://gitee.com/hust-791/GLFW
 [submodule "LightNing/vendor/GLM"]
 	path = LightNing/vendor/GLM
-	url = https://gitee.com/hust-791/glm.git
+	url = https://gitee.com/hust-791/glm
+[submodule "LightNing/vendor/spdlog"]
+	path = LightNing/vendor/spdlog
+	url = https://gitee.com/hust-791/spdlog
