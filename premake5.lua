@@ -28,6 +28,7 @@ IncludeDir["stb_image"] = "LightNing/vendor/stb_image"
 include "LightNing/vendor/GLFW"
 include "LightNing/vendor/GLAD"
 include "LightNing/vendor/ImGui"
+include "Sandbox"
 
 project "LightNing"
 	location "LightNing"
