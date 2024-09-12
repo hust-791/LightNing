@@ -7,6 +7,8 @@ namespace LN {
     class WindowResizeEvent;
     class MouseMoveEvent;
     class KeyPressedEvent;
+    class MouseButtonPressedEvent;
+    class MouseButtonReleasedEvent;
 
     enum class CameraProjModel
     {

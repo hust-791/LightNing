@@ -5,11 +5,12 @@ layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 texCoord;
 out vec2 v_TexCoord;
 
-uniform mat4 matrixProjViewModel;
+uniform mat4 u_ModelMatrix;
+uniform mat4 u_ViewProjectionMatrix;
 
 void main()
 {
-    gl_Position = matrixProjViewModel * vec4(aPos,1.0f);
+    gl_Position = ModelMatrix * ViewProjectionMatrix * vec4(aPos,1.0f);
     v_TexCoord = texCoord;
 }
 

@@ -4,6 +4,7 @@
 #include "LN/Renderer/RendererCommand.h"
 #include "LN/Core/Layer.h"
 #include "LN/ImGui/ImGuiLayer.h"
+#include "LN/Renderer/Camera.h"
 #include "TestBase.h"
 #include "Application.h"
 
@@ -19,6 +20,8 @@ namespace LN
         m_Window = Window::Create();
         m_Window->SetEventCallback(LN_EVENT_BIND_FUNC(Application::OnEvent));
         m_Window->SetVSync(true);
+
+        m_Camera = CreateRef<EditorCamera>();
 
         m_ImGuiLayer =new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);

@@ -6,6 +6,7 @@ namespace LN
 	class Window;
 	class TestMenu;
 	class Layer;
+	class Camera;
 	class ImGuiLayer;
 	class LayerStack;
 	class WindowCloseEvent;
@@ -41,7 +42,7 @@ namespace LN
 
 		Scope<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
-
+		Ref<Camera> m_Camera;
 
 		Scope<TestMenu> m_TestMenu;
 		LayerStack m_LayerStack;
