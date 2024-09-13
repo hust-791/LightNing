@@ -19,7 +19,7 @@ project "Sandbox"
 		"%{wks.location}/LightNing/vendor/spdlog/include",
 		"%{wks.location}/LightNing/src",
 		"%{wks.location}/LightNing/vendor",
-		"%{IncludeDir.glm}",
+		"%{wks.location}/%{IncludeDir.glm}"
 	}
 
 	links

@@ -30,7 +30,7 @@ namespace LN {
 
 			GLCall(glEnableVertexAttribArray(i));
 			GLCall(glVertexAttribPointer(i, element.count, element.type,
-				element.normalized, layout.getStride(), (const void*)offset));
+				element.normalized, layout.getStride(), reinterpret_cast<const void*>(offset)));
 			offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 		}
 

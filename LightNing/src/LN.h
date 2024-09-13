@@ -8,4 +8,7 @@
 #include "LN/Core/Log.h"
 #include "LN/Core/Assert.h"
 
+#include "LN/Event/Event.h"
+
+#include "LN/Core/Layer.h"
 #include "LN/Core/LayerStack.h"

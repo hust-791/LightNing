@@ -22,7 +22,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "LightNing/vendor/GLFW/include"
 IncludeDir["GLAD"] = "LightNing/vendor/GLAD/include"
 IncludeDir["ImGui"] = "LightNing/vendor/imgui"
-IncludeDir["glm"] = "LightNing/vendor/glm"
+IncludeDir["glm"] = "LightNing/vendor/GLM"
 IncludeDir["stb_image"] = "LightNing/vendor/stb_image"
 
 include "LightNing/vendor/GLFW"
