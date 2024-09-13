@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "LN/Core/Window.h"
 #include "LN/Event/Event.h"
-#include "LN/Renderer/RendererCommand.h"
+#include "LN/Renderer/RenderCommand.h"
 #include "LN/Core/Layer.h"
 #include "LN/ImGui/ImGuiLayer.h"
 #include "LN/Renderer/Camera.h"
@@ -20,8 +20,6 @@ namespace LN
         m_Window = Window::Create();
         m_Window->SetEventCallback(LN_EVENT_BIND_FUNC(Application::OnEvent));
         m_Window->SetVSync(true);
-
-        m_Camera = CreateRef<EditorCamera>();
 
         m_ImGuiLayer =new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
@@ -66,25 +64,19 @@ namespace LN
     {
         while (m_Running)
         {
-            RendererCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 0.0f });
-            RendererCommand::Clear();
+            {
+                for (Layer* layer : m_LayerStack)
+                    layer->OnUpdate(0);
+            }
 
             m_ImGuiLayer->Begin();
-
-            if (m_TestMenu->GetCurrentTest())
             {
-                m_TestMenu->GetCurrentTest()->OnUpdata(0.0f);
-                m_TestMenu->GetCurrentTest()->OnRender();
-
-                if (m_TestMenu->GetCurrentTest() != m_TestMenu.get() && ImGui::Button("<-"))
-                {
-                    delete m_TestMenu->GetCurrentTest();
-                    m_TestMenu->SetCurrentTest(m_TestMenu.get());
-                }
-                m_TestMenu->GetCurrentTest()->OnImGuiRender();
+                for (Layer* layer : m_LayerStack)
+                    layer->OnImGuiRender();
             }
 
             m_ImGuiLayer->End();
+
 
             m_Window->OnUpdata();
         }

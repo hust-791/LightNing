@@ -1,16 +1,17 @@
 #pragma once
-class VertexArray;
-class IndexBuffer;
 class Shader;
 
 namespace LN
 {
+	class VertexArray;
+	class IndexBuffer;
+	class Camera;
 
 	class Renderer
 	{
 	public:
-		static void BeginSence(Camera& camera);
-		static void EndSence();
+		static void BeginScene(Camera* camera);
+		static void EndScene();
 
 		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertxeArray);
 

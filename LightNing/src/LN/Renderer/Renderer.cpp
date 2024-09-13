@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "LN/Renderer/VertexArray.h"
 #include "RendererAPI.h"
-#include "RendererCommand.h"
+#include "RenderCommand.h"
 #include "Camera.h"
 #include "Renderer.h"
 
@@ -9,12 +9,12 @@ namespace LN {
 
 	Renderer::SenceData* Renderer::m_SenceData = new Renderer::SenceData;
 
-	void Renderer::BeginSence(Camera& camera)
+	void Renderer::BeginScene(Camera* camera)
 	{
-		m_SenceData->ViewProjectionMatrix = camera.GetViewProjection();
+		m_SenceData->ViewProjectionMatrix = camera->GetViewProjection();
 	}
 
-	void Renderer::EndSence()
+	void Renderer::EndScene()
 	{
 	}
 
@@ -23,7 +23,7 @@ namespace LN {
 		shader->Bind();
 		shader->SetUniformMatrix4fv("u_ViewProjectionMatrix", 1, GL_FALSE, m_SenceData->ViewProjectionMatrix);
 		vertxeArray->Bind();
-		RendererCommand::DrawIndexed(vertxeArray);
+		RenderCommand::DrawIndexed(vertxeArray);
 	}
 
 }

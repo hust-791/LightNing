@@ -2,24 +2,24 @@
 #include "LN/Renderer/VertexArray.h"
 #include "LN/Renderer/RendererAPI.h"
 #include "Platform/OpenGL/OpenGLRendererAPI.h"
-#include "RendererCommand.h"
+#include "RenderCommand.h"
 
 
 namespace LN {
-	RendererAPI* RendererCommand::s_RendererAPI = new OpenGLRendererAPI;
+	RendererAPI* RenderCommand::s_RendererAPI = new OpenGLRendererAPI;
 
 
-	void RendererCommand::SetClearColor(const glm::vec4& color)
+	void RenderCommand::SetClearColor(const glm::vec4& color)
 	{
 		s_RendererAPI->SetClearColor(color);
 	}
 
-	void RendererCommand::Clear()
+	void RenderCommand::Clear()
 	{
 		s_RendererAPI->Clear();
 	}
 
-	void RendererCommand::DrawIndexed(const Ref<VertexArray>& vertexArray)
+	void RenderCommand::DrawIndexed(const Ref<VertexArray>& vertexArray)
 	{
 		s_RendererAPI->DrawIndexed(vertexArray);
 	}

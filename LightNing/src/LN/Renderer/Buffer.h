@@ -2,13 +2,31 @@
 
 namespace LN
 {
+	enum class ShaderDataType
+	{
+		None = 0, Float, UInt, Byte, Bool
+	};
+
+	static uint32_t ShaderDataTypeSize(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case ShaderDataType::Float:    return 4;
+		case ShaderDataType::UInt:     return 4;
+		case ShaderDataType::Byte:     return 1;
+		case ShaderDataType::Bool:     return 1;
+		}
+
+		LN_CORE_ASSERT(false, "Unknown ShaderDataType!");
+		return 0;
+	}
+
+
 	struct VertexBufferElement
 	{
-		unsigned int type;
+		ShaderDataType type;
 		unsigned int count;
-		unsigned char normalized;
-
-		static unsigned int GetSizeOfType(unsigned int type);
+		bool normalized;
 	};
 
 	class VertexBufferLayout
@@ -30,13 +48,25 @@ namespace LN
 		}
 
 		template<>
-		void Push<float>(unsigned int count);
+		void Push<float>(unsigned int count)
+		{
+			m_Elements.push_back({ ShaderDataType::Float,count,false });
+			m_Stride += count * ShaderDataTypeSize(ShaderDataType::Float);
+		}
 
 		template<>
-		void Push<unsigned int>(unsigned int count);
+		void Push<unsigned int>(unsigned int count)
+		{
+			m_Elements.push_back({ ShaderDataType::UInt,count,true });
+			m_Stride += count * ShaderDataTypeSize(ShaderDataType::UInt);
+		}
 
 		template<>
-		void Push<unsigned char>(unsigned int count);
+		void Push<unsigned char>(unsigned int count)
+		{
+			m_Elements.push_back({ ShaderDataType::Byte,count,true });
+			m_Stride += count * ShaderDataTypeSize(ShaderDataType::Byte);
+		}
 	};
 
 

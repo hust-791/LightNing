@@ -6,7 +6,7 @@ namespace LN {
 	class VertexArray;
 	class RendererAPI;
 
-	class RendererCommand
+	class RenderCommand
 	{
 	public:
 		static void SetClearColor(const glm::vec4& color);

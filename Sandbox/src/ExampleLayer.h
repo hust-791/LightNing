@@ -15,7 +15,15 @@ public:
 	void OnEvent(LN::Event& e) override;
 
 private:
+	LN::Ref<Shader> m_Shader;
+	LN::Ref<LN::VertexArray> m_VertexArray;
 
+	std::unique_ptr<Texture> m_texture;
 
+	//Ä£ÐÍ¾ØÕó
+	float m_rotation[3];
+	bool  m_isAuto[3];
+
+	LN::Ref<LN::Camera> m_Camera;
 };
 

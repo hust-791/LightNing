@@ -42,7 +42,6 @@ namespace LN
 	private:
 		Scope<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
-		Ref<Camera> m_Camera;
 
 		Scope<TestMenu> m_TestMenu;
 		LayerStack m_LayerStack;
