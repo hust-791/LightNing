@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "shader.h"
-#include "shader.h"
 
 Shader::Shader(std::string path) :m_RendererID(0), m_Path(path)
 {

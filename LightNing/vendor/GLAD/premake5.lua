@@ -13,7 +13,8 @@ project "GLAD"
 		"src/glad.c"
 	}
 	includedirs{
-		"include" -- 为了glad.c直接#include <glad/glad.h>，而不用#include <include/glad/glad.h>
+		"./include",
+		"../"
 	}
 
     filter "system:windows"

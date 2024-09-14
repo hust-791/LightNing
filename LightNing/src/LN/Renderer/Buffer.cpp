@@ -6,7 +6,7 @@
 
 namespace LN
 {
-	Ref<VertexBuffer> VertexBuffer::Create(float* vertex, size_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertex, uint32_t size)
 	{
 		switch (RendererAPI::GetAPI())
 		{
@@ -18,7 +18,7 @@ namespace LN
 		return nullptr;
 	}
 
-	Ref<IndexBuffer> IndexBuffer::Create(size_t* index, size_t size)
+	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* index, uint32_t size)
 	{
 		switch (RendererAPI::GetAPI())
 		{

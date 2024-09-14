@@ -6,7 +6,7 @@ ExampleLayer::ExampleLayer()
 	: Layer("ExampleLayer"), m_rotation{ 0.0f,0.0f,0.0f }, m_isAuto{ 0,0,0 }
 {
 	// 创建着色器程序
-	m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
+	m_Shader = std::make_unique<Shader>("D:/C++ Files/LightNing/LightNing/res/shaders/Basic.shader");
 
 	float vertices[] = {
 		-0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
@@ -18,7 +18,7 @@ ExampleLayer::ExampleLayer()
 		 0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
 		-0.5f,  0.5f, -0.5f, 0.0f, 1.0f
 	};
-	size_t indicesCube[] = {
+	uint32_t indicesCube[] = {
 		0,1,2,
 		2,3,0,
 		1,5,6,
@@ -32,7 +32,7 @@ ExampleLayer::ExampleLayer()
 		5,4,7,
 		7,6,5
 	};
-	size_t indicesLine[] = {
+	uint32_t indicesLine[] = {
 		0,1,
 		1,2,
 		2,3,
@@ -57,13 +57,12 @@ ExampleLayer::ExampleLayer()
 	vertexBuffer->SetLayout(layout);
 
 	m_VertexArray->AddVertexBuffer(vertexBuffer);
-	LN::Ref<LN::IndexBuffer> indexBuffer = LN::IndexBuffer::Create(indicesCube, sizeof(indicesCube) / sizeof(size_t));
+	LN::Ref<LN::IndexBuffer> indexBuffer = LN::IndexBuffer::Create(indicesCube, sizeof(indicesCube) / sizeof(uint32_t));
 	m_VertexArray->SetIndexBuffer(indexBuffer);
 
-	m_texture = std::make_unique<Texture>("res/texture/kun.jpeg");
-	m_texture->Bind();
+	m_texture = std::make_unique<Texture>("D:/C++ Files/LightNing/LightNing/res/texture/kun.jpeg");
 
-	m_Camera = LN::CreateRef<LN::EditorCamera>();
+	m_Camera = LN::CreateRef<LN::EditorCamera>(30.0f, 1.778f, 0.1f, 1000.0f);
 }
 
 void ExampleLayer::OnAttach()
@@ -79,11 +78,11 @@ void ExampleLayer::OnUpdate(float ts)
 	m_Camera->OnUpdate(ts);
 
 	// Render
-	LN::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+	LN::RenderCommand::SetClearColor({ 0.2f, 0.0f, 0.1f, 0.5f });
 	LN::RenderCommand::Clear();
 
 	LN::Renderer::BeginScene(m_Camera.get());
-
+	//m_texture->Bind(1);
 	LN::Renderer::Submit(m_Shader, m_VertexArray);
 
 	LN::Renderer::EndScene();

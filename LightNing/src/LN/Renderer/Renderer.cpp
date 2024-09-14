@@ -21,7 +21,8 @@ namespace LN {
 	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertxeArray)
 	{
 		shader->Bind();
-		shader->SetUniformMatrix4fv("u_ViewProjectionMatrix", 1, GL_FALSE, m_SenceData->ViewProjectionMatrix);
+		shader->SetUniformMatrix4fv("u_Transform", 1, GL_FALSE, glm::mat4(1.0));
+		shader->SetUniformMatrix4fv("u_ViewProjection", 1, GL_FALSE, m_SenceData->ViewProjectionMatrix);
 		vertxeArray->Bind();
 		RenderCommand::DrawIndexed(vertxeArray);
 	}

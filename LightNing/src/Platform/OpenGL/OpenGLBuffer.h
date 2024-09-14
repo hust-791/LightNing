@@ -5,7 +5,7 @@ namespace LN
 	class OpenGLVertexBuffer :public VertexBuffer
 	{
 	public:
-		OpenGLVertexBuffer(float* vertex, size_t size);
+		OpenGLVertexBuffer(float* vertex, uint32_t size);
 		~OpenGLVertexBuffer();
 
 		void Bind()const override;
@@ -23,7 +23,7 @@ namespace LN
 	class OpenGLIndexBuffer :public IndexBuffer
 	{
 	public:
-		OpenGLIndexBuffer(size_t* vertex, size_t size);
+		OpenGLIndexBuffer(uint32_t* vertex, uint32_t size);
 		~OpenGLIndexBuffer();
 
 		void Bind()const override;
@@ -33,6 +33,6 @@ namespace LN
 
 	private:
 		unsigned int m_rendererID;
-		int m_count;
+		uint32_t m_count;
 	};
 }

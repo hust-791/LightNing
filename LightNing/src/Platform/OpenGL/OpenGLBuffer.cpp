@@ -8,7 +8,7 @@ namespace LN
 	//---------------------Vertex Buffer------------------------
 	//----------------------------------------------------------
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertex, size_t size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertex, uint32_t size)
 	{
 		GLCall(glGenBuffers(1, &m_rendererID));
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_rendererID));
@@ -45,11 +45,11 @@ namespace LN
 	//----------------------Index Buffer------------------------
 	//----------------------------------------------------------
 
-	OpenGLIndexBuffer::OpenGLIndexBuffer(size_t* vertex, size_t size) :m_count((int)size)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* vertex, uint32_t size) :m_count(size)
 	{
 		GLCall(glGenBuffers(1, &m_rendererID));
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID));
-		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, vertex, GL_STATIC_DRAW));
+		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), vertex, GL_STATIC_DRAW));
 	}
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
