@@ -5,7 +5,6 @@
 #include "LN/Core/Layer.h"
 #include "LN/ImGui/ImGuiLayer.h"
 #include "LN/Renderer/Camera.h"
-#include "TestBase.h"
 #include "Application.h"
 
 namespace LN
@@ -23,8 +22,6 @@ namespace LN
 
         m_ImGuiLayer =new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
-
-        m_TestMenu = TestMenu::Create();
     }
 
     Application::~Application()
@@ -36,8 +33,6 @@ namespace LN
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<WindowCloseEvent>(LN_EVENT_BIND_FUNC(Application::OnWindowClose));
         dispatcher.Dispatch<WindowResizeEvent>(LN_EVENT_BIND_FUNC(Application::OnWindowResize));
-
-        m_TestMenu->GetCurrentTest()->OnEvent(e);
 
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
         {
@@ -64,9 +59,13 @@ namespace LN
     {
         while (m_Running)
         {
+            float time = (float)glfwGetTime();
+            Timestep timestep = time - m_LastFrameTime;
+            m_LastFrameTime = time;
+
             {
                 for (Layer* layer : m_LayerStack)
-                    layer->OnUpdate(0);
+                    layer->OnUpdate(timestep);
             }
 
             m_ImGuiLayer->Begin();

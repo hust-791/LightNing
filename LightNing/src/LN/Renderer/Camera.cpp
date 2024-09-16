@@ -110,7 +110,7 @@ namespace LN {
 		return 0.8f;
 	}
 
-	void Camera::OnUpdate(float ts)
+	void Camera::OnUpdate(Timestep ts)
 	{
 
 	}
@@ -151,7 +151,7 @@ namespace LN {
 	{
 	}
 
-	void EditorCamera::OnUpdate(float ts)
+	void EditorCamera::OnUpdate(Timestep ts)
 	{
 		Camera::OnUpdate(ts);
 
@@ -198,7 +198,7 @@ namespace LN {
 	//---------------|------------|----------------------
 
 
-	void ViewCamera::OnUpdate(float ts)
+	void ViewCamera::OnUpdate(Timestep ts)
 	{
 		Camera::OnUpdate(ts);
 	}

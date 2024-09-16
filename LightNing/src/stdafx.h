@@ -25,6 +25,8 @@
 //platform
 #include "LN/Core/PlatformDetection.h"
 
+#include "LN/Core/TimeStep.h"
+
 //define
 #include "LNdefine.h"
 #include "LN/Core/Log.h"

@@ -60,6 +60,8 @@ ShaderProgramSource Shader::__ParseShader(const std::string& path)
 {
     std::ifstream stream(path);
 
+    LN_CORE_ASSERT(stream, "can not find shader file!");
+
     enum class ShaderType
     {
         NONE = -1, VERTEX = 0, FRAGMENT = 1

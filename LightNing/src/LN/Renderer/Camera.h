@@ -24,7 +24,7 @@ namespace LN {
         virtual ~Camera() = default;
 
         virtual void OnEvent(Event& e);
-        virtual void OnUpdate(float ts);
+        virtual void OnUpdate(Timestep ts);
 
         inline float GetYaw() const { return m_Yaw; }
         inline float GetPitch() const { return m_Pitch; }
@@ -82,7 +82,7 @@ namespace LN {
         EditorCamera() = default;
         EditorCamera(float fov, float aspectRatio, float nearClip, float farClip, CameraProjModel model = CameraProjModel::en_Proj);
 
-        void OnUpdate(float ts) override;
+        void OnUpdate(Timestep ts) override;
         void OnEvent(Event& e) override;
 
     private:
@@ -100,7 +100,7 @@ namespace LN {
         ViewCamera() = default;
         ViewCamera(float fov, float aspectRatio, float nearClip, float farClip, CameraProjModel model = CameraProjModel::en_Proj);
 
-        void OnUpdate(float ts) override;
+        void OnUpdate(Timestep ts) override;
         void OnEvent(Event& e) override;
 
     private:

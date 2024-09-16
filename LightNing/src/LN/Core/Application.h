@@ -6,7 +6,6 @@ namespace LN
 {
 	class Event;
 	class Window;
-	class TestMenu;
 	class Layer;
 	class Camera;
 	class ImGuiLayer;
@@ -29,8 +28,6 @@ namespace LN
 
 		Window& GetWindow() { return *m_Window; }
 
-		TestMenu& GetTestMenu() { return *m_TestMenu; }
-
 		static Application& Get() { return *s_Instance; }
 
 	private:
@@ -43,10 +40,10 @@ namespace LN
 		Scope<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 
-		Scope<TestMenu> m_TestMenu;
 		LayerStack m_LayerStack;
 
 		bool m_Running = true;
+		float m_LastFrameTime = 0.0f;
 
 	private:
 		static Application* s_Instance;

@@ -10,13 +10,14 @@ public:
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
 
-	void OnUpdate(float ts) override;
+	void OnUpdate(LN::Timestep ts) override;
 	virtual void OnImGuiRender() override;
 	void OnEvent(LN::Event& e) override;
 
 private:
 	LN::Ref<Shader> m_Shader;
-	LN::Ref<LN::VertexArray> m_VertexArray;
+	LN::Ref<LN::VertexArray> m_VA_Cube;
+	LN::Ref<LN::VertexArray> m_VA_Line;
 
 	std::unique_ptr<Texture> m_texture;
 

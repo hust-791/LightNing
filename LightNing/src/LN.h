@@ -8,6 +8,7 @@
 #include "LN/Core/Log.h"
 #include "LN/Core/Assert.h"
 
+#include "LN/Core/TimeStep.h"
 
 
 #include "LN/Event/Event.h"
@@ -19,7 +20,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <GLAD/include/glad.h>
+//#include <GLAD/include/glad.h>
 
 
 // Renderer
